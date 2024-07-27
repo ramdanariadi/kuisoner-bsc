@@ -18,7 +18,7 @@ class TrackPostViews
     {
         $id = $request->route('id');
         $ip = $request->ip();
-        if ($id && !PostView::where('post_id', $id)->where('ip_address', decode_id($id))->exists()) {
+        if ($id && !PostView::where('post_id', decode_id($id))->where('ip_address', $ip)->exists()) {
             PostView::create([
                 'post_id' => decode_id($id),
                 'ip_address' => $ip,
