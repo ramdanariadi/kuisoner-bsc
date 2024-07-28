@@ -59,6 +59,9 @@
                                         @lang('post::text.name')
                                     </th>
                                     <th>
+                                        Viewers
+                                    </th>
+                                    <th>
                                         @lang('post::text.updated_at')
                                     </th>
                                     <th class="text-end">
@@ -111,6 +114,10 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'viewer_count',
+                    name: 'viewer_count'
                 },
                 {
                     data: 'updated_at',

@@ -124,7 +124,7 @@ class BackendBaseController extends Controller
         $page_heading = label_case($module_title);
         $title = $page_heading.' '.label_case($module_action);
 
-        $$module_name = $module_model::select('id', 'name', 'updated_at');
+        $$module_name = $module_model::select('id', 'name', 'viewer_count', 'updated_at');
 
         $data = $$module_name;
 
