@@ -36,6 +36,9 @@
         <x-backend.buttons.return-back small="true" />
         @can('edit_'.$module_name)
         <x-buttons.edit route='{!!route("backend.$module_name.edit", $data)!!}' title="{{__('Edit')}} {{ ucwords(Str::singular($module_name)) }}" class="m-1" small="true" />
+            @if($module_title == 'Posts')
+            <x-backend.buttons.copy-link action="copyToClipboard('{{ route('detail',['id' => encode_id($data->id)]) }}')" title="{{__('Copy Link')}} {{ ucwords(Str::singular($module_name)) }}" small="true" />
+            @endif
         @endcan
         <a href="{{ route("backend.$module_name.index") }}" class="btn btn-secondary btn-sm" data-toggle="tooltip" title="{{ ucwords($module_name) }} List"><i class="fas fa-list"></i> List</a>
         @endif
