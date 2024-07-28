@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Modules\Post\Models\PostView;
+use Modules\Post\Models\Post;
 
 class TrackPostViews
 {
@@ -16,13 +17,21 @@ class TrackPostViews
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $id = $request->route('id');
-        $ip = $request->ip();
-        if ($id && !PostView::where('post_id', decode_id($id))->where('ip_address', $ip)->exists()) {
-            PostView::create([
-                'post_id' => decode_id($id),
-                'ip_address' => $ip,
-            ]);
+        if ($request->route()->getName() == 'detail') {
+            $id = $request->route('id');
+            $ip = $request->ip();
+            if ($id && !PostView::where('post_id', decode_id($id))->where('ip_address', $ip)->exists()) {
+                $affected_rows = Post::where('id', decode_id($id))
+                    ->where('status', 'Published')
+                    ->increment('viewer_count');
+
+                if ($affected_rows) {
+                    PostView::create([
+                        'post_id' => decode_id($id),
+                        'ip_address' => $ip,
+                    ]);
+                }
+            }
         }
 
         return $next($request);
