@@ -76,5 +76,18 @@
         <!-- / Scripts -->
 
     </body>
+<<<<<<< HEAD
+=======
+    <script>
+        function copyToClipboard(textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                console.info("Copied to clipboard: " + textToCopy);
+            }).catch(function(error) {
+                console.error("Error copying to clipboard: ", error);
+            });
+        }
+    </script>
+@yield('custom-script')
+>>>>>>> f9cf5033 (add copyToClipBoard script)
 
 </html>
