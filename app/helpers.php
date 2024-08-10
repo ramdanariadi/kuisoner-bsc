@@ -210,7 +210,7 @@ if (! function_exists('encode_id')) {
      */
     function encode_id($id)
     {
-        $sqids = new Sqids\Sqids(alphabet: 'abcdefghijklmnopqrstuvwxyz123456789');
+        $sqids = new Sqids\Sqids(alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789-^$!', minLength: 36);
 
         return $sqids->encode([$id]);
     }
@@ -228,7 +228,7 @@ if (! function_exists('decode_id')) {
      */
     function decode_id($hashid)
     {
-        $sqids = new Sqids\Sqids(alphabet: 'abcdefghijklmnopqrstuvwxyz123456789');
+        $sqids = new Sqids\Sqids(alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789-^$!', minLength: 36);
         $id = $sqids->decode($hashid);
 
         if (count($id)) {
