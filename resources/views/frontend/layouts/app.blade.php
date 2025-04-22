@@ -25,6 +25,8 @@
 
         @stack('after-styles')
 
+        @yield('other-style')
+
         <x-google-analytics />
     </head>
 
@@ -42,5 +44,5 @@
         @livewireScripts
         @stack('after-scripts')
     </body>
-
+    @yield('other-script')
 </html>
