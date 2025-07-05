@@ -45,6 +45,21 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+    pma-maria:
+        image: phpmyadmin
+        environment:
+            PMA_USER: sail
+            PMA_PASSWORD: password
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+            UPLOAD_LIMIT: 30000000000
+        links:
+            - mysql
+        # restart: always
+        ports:
+            - 3000:80
+        networks:
+            - sail
     # redis:
     #     image: 'redis:alpine'
     #     ports:
