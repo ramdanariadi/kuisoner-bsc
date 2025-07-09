@@ -4,4 +4,5 @@
     "Tag": true,
     "RespondentType": true,
     "Questionnaire": true,
+    "Questionnairetype": true
 }
