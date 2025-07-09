@@ -6,6 +6,9 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use Modules\Questionnaire\database\seeders\QuestionnaireDatabaseSeeder;
+use Modules\Questionnairetype\database\seeders\QuestionnairetypeDatabaseSeeder;
+use Modules\RespondentType\database\seeders\RespondentTypeDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +20,8 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         $this->call(AuthTableSeeder::class);
-
+        $this->call(RespondentTypeDatabaseSeeder::class);
+        $this->call(QuestionnairetypeDatabaseSeeder::class);
         Schema::enableForeignKeyConstraints();
 
         // User::factory()->create([
