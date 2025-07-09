@@ -1,0 +1,13 @@
+{
+    "name": "RespondentType",
+    "alias": "respondenttype",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\RespondentType\\Providers\\RespondentTypeServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

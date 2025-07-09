@@ -1,0 +1,13 @@
+{
+    "name": "Questionnairetype",
+    "alias": "questionnairetype",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Questionnairetype\\Providers\\QuestionnairetypeServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
