@@ -1,5 +1,7 @@
 {
     "Post": true,
     "Category": true,
+    "Tag": true,
+    "RespondentType": true,
     "Questionnaire": true,
 }
