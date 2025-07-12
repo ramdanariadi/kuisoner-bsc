@@ -26,6 +26,8 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
     <!-- <link rel="stylesheet" href="{{asset('bootstrap-5.0.2-dist\css\bootstrap.min.css')}}"> -->
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -249,7 +251,7 @@
                                     <input type="hidden" name="questionnaire_id" value="<?= $questionnaire->questionnaire_id ?>">
                                     <tr>
                                         <td colspan="7">
-                                            <h2><?= $alphabet[$alphabetIndex] ."." .$questionnaireTmp->perspective ?></h2>
+                                            <h2><?= $alphabet[$alphabetIndex] . "." . $questionnaireTmp->perspective ?></h2>
                                         </td>
                                     </tr>
                                     <tr>
@@ -322,6 +324,8 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- SweetAlert2 -->
+<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
@@ -367,8 +371,11 @@
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    alert('Data saved successfully!');
-                    // Optionally, you can redirect or update the UI here
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Data saved successfully!",
+                        icon: "success"
+                    });
                 },
                 error: function(xhr, status, error) {
                     alert('An error occurred while saving data: ' + error);
@@ -377,4 +384,5 @@
         });
     });
 </script>
+
 </html>
