@@ -25,7 +25,7 @@ class RespondentTypeDatabaseSeeder extends Seeder
          */
 
         DB::table('respondenttypes')->insert([
-            'name'          => 'Guru',
+            'name'          => 'Siswa',
             'created_at'    => new DateTime('now'),
             'updated_at'    => new DateTime('now'),
         ]);
