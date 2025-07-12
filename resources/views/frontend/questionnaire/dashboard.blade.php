@@ -26,10 +26,6 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
     <!-- <link rel="stylesheet" href="{{asset('bootstrap-5.0.2-dist\css\bootstrap.min.css')}}"> -->
-    <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -61,6 +57,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <!-- Messages Dropdown Menu -->
+                @if(auth()->check())
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-user"></i>
@@ -75,6 +72,13 @@
                         </a>
                     </div>
                 </li>
+                @else
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('login')}}">
+                        <i class="fas fa-sign-in-alt"></i> LOGIN
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -117,7 +121,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="{{route('frontend.index')}}" class="nav-link">
+                            <a href="{{route('frontend.index')}}" class="nav-link active">
                                 <i class="fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -129,25 +133,25 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.keuangan')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.keuangan')) active @endif">
+                                    <a href="{{route('frontend.questionnaire.keuangan')}}" class="nav-link">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>KEUANGAN</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.pelanggan')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.pelanggan')) active @endif">
+                                    <a href="{{route('frontend.questionnaire.pelanggan')}}" class="nav-link">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>PELANGGAN</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.internal')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.internal')) active @endif">
+                                    <a href="{{route('frontend.questionnaire.internal')}}" class="nav-link">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>PROSES INTERNAL</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.pertumbuhan')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.pertumbuhan')) active @endif">
+                                    <a href="{{route('frontend.questionnaire.pertumbuhan')}}" class="nav-link">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>PEMBELAJARAN DAN PERTUMBUHAN</p>
                                     </a>
@@ -168,22 +172,8 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            @if($questionnaires)
-                            @php
-                            $questionnaire = $questionnaires[0];
-                            $questionnaireId = $questionnaire ? $questionnaire->questionnaire_id : null;
-                            $questionnaireTitle = $questionnaire ? $questionnaire->title : null;
-                            $questionnaireRespondent = $questionnaire ? $questionnaire->respondent : null;
-                            $perspective = $questionnaire ? $questionnaire->perspective : null;
-                            @endphp
-                            @endif
-                            <h1 class="m-0"><?= $perspective ?></h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Kuisoner 1</li> -->
-                            </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -193,83 +183,7 @@
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
-                    @if($questionnaires)
-                    <div class="row">
-                        <h1 class="w-100"><?= $questionnaireTitle ?></h1>
-                        <p class="w-100"><strong>Responden:</strong> <?= $questionnaireRespondent ?></p>
-                        <p class="w-100 mb-0"><strong>Petunjuk Pengisian:</strong></p>
-                        <ol class="w-100">
-                            <li>Bacalah setiap pernyataan dengan saksama.</li>
-                            <li>Pilih angka yang sesuai dengan pendapat Anda.</li>
-                            <li>
-                                Skala Yang Digunakan:<br>
-                                <ul>
-                                    <li>1 = Sangat Tidak Setuju / Sangat Buruk / Sangat Tidak Efektif</li>
-                                    <li>2 = Tidak Setuju / Buruk / Tidak Efektif</li>
-                                    <li>3 = Cukup Setuju / Cukup Baik / Cukup Efektif</li>
-                                    <li>4 = Setuju / Baik / Efektif</li>
-                                    <li>5 = Sangat Setuju / Sangat Baik / Sangat Efektif</li>
-                                </ul>
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="row">
-                        <form action="#" method="post">
-                            <table class="table">
-                                <tbody>
-                                    @php
-                                    $alphabet = range('A', 'Z');
-                                    $alphabetIndex = -1;
-                                    $statementIndex = 0;
-                                    $questionnaireTmp = null;
-                                    @endphp
-                                    @foreach($questionnaires as $questionnaire)
-                                    @if($questionnaireTmp == null || $questionnaireTmp->perspective != $questionnaire->perspective)
-                                    @php
-                                    $questionnaireTmp = $questionnaire;
-                                    $alphabetIndex++;
-                                    @endphp
-                                    <input type="hidden" name="questionnaire_id" value="<?= $questionnaire->questionnaire_id ?>">
-                                    <tr>
-                                        <td colspan="7">
-                                            <h2><?= $alphabet[$alphabetIndex] . "." . $questionnaireTmp->perspective ?></h2>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>No</th>
-                                        <th class="statement">Pernyataan</th>
-                                        <th>1</th>
-                                        <th>2</th>
-                                        <th>3</th>
-                                        <th>4</th>
-                                        <th>5</th>
-                                    </tr>
-                                    @endif
-                                    <tr>
-                                        <td><?= $alphabet[$alphabetIndex] . ++$statementIndex ?></td>
-                                        <td class="statement"><?= $questionnaire->statement ?></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 1 ? 'checked' : '' ?> value="1" required></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 2 ? 'checked' : '' ?> value="2"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 3 ? 'checked' : '' ?> value="3"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 4 ? 'checked' : '' ?> value="4"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 5 ? 'checked' : '' ?> value="5"></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="6"></td>
-                                        <td>
-                                            <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Simpan</button>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </form>
 
-                    </div>
-                    @endif
-                    <!-- /.row -->
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -305,8 +219,6 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- SweetAlert2 -->
-<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
@@ -331,39 +243,5 @@
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $(document).ready(function() {
-        // Handle form submission
-        $('form').on('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            // Collect form data
-            var formData = $(this).serialize();
-
-            // Send data to the server using AJAX
-            $.ajax({
-                url: '/questionnaire/answer', // Adjust the URL as needed
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    Swal.fire({
-                        title: "Good job!",
-                        text: "Data saved successfully!",
-                        icon: "success"
-                    });
-                },
-                error: function(xhr, status, error) {
-                    alert('An error occurred while saving data: ' + error);
-                }
-            });
-        });
-    });
-</script>
 
 </html>

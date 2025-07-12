@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class QuestionnaireController extends Controller
 {
-    public function index()
+    public function keuangan()
     {
 
         $data = DB::table('statements as s')
@@ -30,7 +30,76 @@ class QuestionnaireController extends Controller
             ])
             ->get();
 
-        return view('frontend.questionnaire.keuangan', ['questionnaires' => $data]);
+        return view('frontend.questionnaire.index', ['questionnaires' => $data]);
+    }
+
+    public function pelanggan()
+    {
+        $data = DB::table('statements as s')
+            ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
+            ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
+            ->join('questionnaires as q', 's.questionnaire_id', '=', 'q.id')
+            ->leftJoin('user_answers as ua', 'ua.statement_id', '=', 's.id')
+            ->where('s.questionnaire_type_id', '=', 2)
+            ->select([
+                'q.id as questionnaire_id',
+                'q.name as title',
+                'rt.name as respondent',
+                'qt.name as perspective',
+                'qt.id as perspective_id',
+                's.id as statement_id',
+                's.statement',
+                'ua.value'
+            ])
+            ->get();
+
+        return view('frontend.questionnaire.index', ['questionnaires' => $data]);
+    }
+
+    public function internal()
+    {
+        $data = DB::table('statements as s')
+            ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
+            ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
+            ->join('questionnaires as q', 's.questionnaire_id', '=', 'q.id')
+            ->leftJoin('user_answers as ua', 'ua.statement_id', '=', 's.id')
+            ->where('s.questionnaire_type_id', '=', 3)
+            ->select([
+                'q.id as questionnaire_id',
+                'q.name as title',
+                'rt.name as respondent',
+                'qt.name as perspective',
+                'qt.id as perspective_id',
+                's.id as statement_id',
+                's.statement',
+                'ua.value'
+            ])
+            ->get();
+
+        return view('frontend.questionnaire.index', ['questionnaires' => $data]);
+    }
+
+    public function pertumbuhan()
+    {
+        $data = DB::table('statements as s')
+            ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
+            ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
+            ->join('questionnaires as q', 's.questionnaire_id', '=', 'q.id')
+            ->leftJoin('user_answers as ua', 'ua.statement_id', '=', 's.id')
+            ->where('s.questionnaire_type_id', '=', 4)
+            ->select([
+                'q.id as questionnaire_id',
+                'q.name as title',
+                'rt.name as respondent',
+                'qt.name as perspective',
+                'qt.id as perspective_id',
+                's.id as statement_id',
+                's.statement',
+                'ua.value'
+            ])
+            ->get();
+
+        return view('frontend.questionnaire.index', ['questionnaires' => $data]);
     }
 
     public function answer(Request $request)
