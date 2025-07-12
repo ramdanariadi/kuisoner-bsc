@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('user_answers', function (Blueprint $table) {
             $table->id();
-
-            $table->string('question');
-            $table->integer('questionnaier_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
+            $table->integer('statement_id');
+            $table->integer('questionnaire_id')->unsigned();
+            $table->integer('questionnaire_type_id')->unsigned();
+            $table->integer('value')->unsigned();
 
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('user_answers');
     }
 };

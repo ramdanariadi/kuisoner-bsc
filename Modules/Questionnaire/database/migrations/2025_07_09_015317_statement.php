@@ -8,18 +8,18 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('questionnaires', function (Blueprint $table) {
+        Schema::create('statements', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->tinyInteger('status')->default(1);
-
+            $table->string('statement');
+            $table->integer('questionnaire_id')->unsigned()->nullable();
+            $table->integer('questionnaire_type_id')->unsigned()->nullable();
+            $table->string('questionnaire_type')->nullable();
+            $table->integer('respondent_type_id')->unsigned()->nullable();
+            $table->string('respondent_type')->nullable();
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->integer('deleted_by')->unsigned()->nullable();
@@ -31,11 +31,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('questionnaires');
+        Schema::dropIfExists('statements');
     }
 };
