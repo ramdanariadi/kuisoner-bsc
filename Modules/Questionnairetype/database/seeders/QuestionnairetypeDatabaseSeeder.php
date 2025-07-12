@@ -32,5 +32,23 @@ class QuestionnairetypeDatabaseSeeder extends Seeder
             'created_at'    => new DateTime('now'),
             'updated_at'    => new DateTime('now'),
         ]);
+
+        DB::table('questionnairetypes')->insert([
+            'name'          => 'PERSPEKTIF PELANGGAN',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+
+        DB::table('questionnairetypes')->insert([
+            'name'          => 'PERSPEKTIF PROSES INTERNAL',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+
+        DB::table('questionnairetypes')->insert([
+            'name'          => 'PERSPEKTIF PEMBELAJARAN DAN PERTUMBUHAN',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
     }
 }
