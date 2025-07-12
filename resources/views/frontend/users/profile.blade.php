@@ -1,160 +1,337 @@
-@extends('frontend.layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title')
-    {{ $$module_name_singular->name }}'s Profile
-@endsection
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{{asset('plugins/jqvmap/jqvmap.min.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('bootstrap-5.0.2-dist\css\bootstrap.min.css')}}"> -->
+</head>
 
-@section('content')
-    <div class="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-4 py-10 sm:grid-cols-3 sm:px-6">
-        <div class="col-span-1">
-            <div class="mb-8 text-center md:mb-0">
-                <img class="mx-auto -mb-24 h-48 w-48 rounded-lg object-cover"
-                    src="{{ asset($$module_name_singular->avatar) }}" alt="{{ $$module_name_singular->name }}" />
-                <div class="rounded-lg bg-white px-8 pb-10 pt-32 text-gray-400 shadow-lg dark:bg-gray-100">
-                    <h3 class="font-title mb-3 text-xl text-gray-800">
-                        {{ $$module_name_singular->name }}
-                    </h3>
-                    <p>
-                        {{ $$module_name_singular->address }}
-                    </p>
-                    <a class="text-blue-800 hover:text-gray-800"
-                        href="{{ route('frontend.users.profile', $$module_name_singular->username) }}" target="_blank">
-                        {{ str_replace(['http://', 'https://'], '', route('frontend.users.profile', $$module_name_singular->username)) }}
+<body>
+    <div class="wrapper">
+        <form id="logout-form" style="display: none;" action="{{ route('logout') }}" method="POST">
+            {{ csrf_field() }}
+        </form>
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+        </div>
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-dark">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <!-- <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Quisoner</a>
+                </li> -->
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-user"></i>
                     </a>
-                    @if ($$module_name_singular->url_website)
-                        <a class="text-blue-800 hover:text-gray-800" href="{{ $$module_name_singular->url_website }}"
-                            target="_blank">
-                            {{ $$module_name_singular->url_website }}
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="profile/100001" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> My Profile
                         </a>
-                    @endif
-                    <div
-                        class="mx-auto mt-5 flex w-40 items-center justify-between border-t border-gray-200 pt-5 text-gray-500">
-
-                        @if ($$module_name_singular->url_facebook)
-                            <a href="{{ $$module_name_singular->url_facebook }}" target="_blank">
-                                <svg class="bi bi-facebook" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                    fill="currentColor" viewBox="0 0 16 16">
-                                    <path
-                                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
-                                </svg>
-                            </a>
-                        @endif
-
-                        @if ($$module_name_singular->url_twitter)
-                            <a href="{{ $$module_name_singular->url_twitter }}" target="_blank">
-                                <svg class="bi bi-twitter" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                    fill="currentColor" viewBox="0 0 16 16">
-                                    <path
-                                        d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
-                                </svg>
-                            </a>
-                        @endif
-
-                        @if ($$module_name_singular->url_instagram)
-                            <a href="{{ $$module_name_singular->url_instagram }}" target="_blank">
-                                <svg class="bi bi-instagram" xmlns="http://www.w3.org/2000/svg" width="30"
-                                    height="30" fill="currentColor" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z" />
-                                </svg>
-                            </a>
-                        @endif
-
-                        @if ($$module_name_singular->url_linkedin)
-                            <a href="{{ $$module_name_singular->url_linkedin }}" target="_blank">
-                                <svg class="bi bi-linkedin" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                    fill="currentColor" viewBox="0 0 16 16">
-                                    <path
-                                        d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
-                                </svg>
-                            </a>
-                        @endif
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fa fa-sign-out-alt"></i> LOGOUT
+                        </a>
                     </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
 
-                    @auth
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <!-- <a href="index3.html" class="brand-link"> -->
+            <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+            <!-- <span class="brand-text font-weight-light">AdminLTE 3</span> -->
+            <!-- </a> -->
 
-                        @if (auth()->user()->id == $$module_name_singular->id)
-                            <div class="mt-8">
-                                <a href='{{ route('frontend.users.profileEdit') }}'>
-                                    <div
-                                        class="w-full rounded border-2 border-gray-900 px-6 py-2 text-sm text-gray-500 transition duration-200 ease-in hover:bg-gray-800 hover:text-white focus:outline-none">
-                                        Edit Profile
-                                    </div>
-                                </a>
-                            </div>
-                        @endif
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Kuisoner</a>
+                    </div>
+                </div>
 
-                        @if (auth()->user()->username == $$module_name_singular->username)
-                            <div class="mt-8">
-                                <a href="{{ route('frontend.users.changePassword') }}">
-                                    <div
-                                        class="w-full rounded border-2 border-gray-900 px-6 py-2 text-sm text-gray-500 transition duration-200 ease-in hover:bg-gray-800 hover:text-white focus:outline-none">
-                                        Change Password
-                                    </div>
-                                </a>
-                            </div>
-                        @endif
-
-                    @endauth
-
+                <!-- SidebarSearch Form -->
+                <!-- <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                <button class="btn btn-sidebar">
+                    <i class="fas fa-search fa-fw"></i>
+                </button>
                 </div>
             </div>
-        </div>
-        <div class="col-span-2">
-            <div class="mb-8 rounded-lg border bg-white p-6 shadow-lg dark:bg-gray-100">
-                <h3 class="text-xl font-semibold">
-                    Profile
-                </h3>
+            </div> -->
 
-                <div class="flex justify-between p-4">
-                    <div class="">
-                        <span class="font-semibold">{{ label_case($field_name = 'first_name') }}: </span>
-                        <span class="">{{ $$module_name_singular->$field_name }}</span>
-                    </div>
-                    <div class="">
-                        <span class="font-semibold">{{ label_case($field_name = 'last_name') }}: </span>
-                        <span class="">{{ $$module_name_singular->$field_name }}</span>
-                    </div>
-                </div>
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                    with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="{{route('frontend.index')}}" class="nav-link active">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-clipboard-list"></i>
+                                <p>Kuisoner<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.keuangan')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>KEUANGAN</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.pelanggan')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>PELANGGAN</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.internal')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>PROSES INTERNAL</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.pertumbuhan')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>PEMBELAJARAN DAN PERTUMBUHAN</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
 
-                @auth
-                    @if (auth()->user()->id == $$module_name_singular->id)
-                        <div class="flex justify-between p-4">
-                            <div class="">
-                                <span class="font-semibold">{{ label_case($field_name = 'email') }}: </span>
-                                <span class="">{{ $$module_name_singular->$field_name }}</span>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <div class="container py-5">
+                <div class="row">
+                    <!-- Left Column -->
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="card shadow">
+                            <div class="card-header">
+                                <h3 class="card-title text-dark">{{ $$module_name_singular->name }}</h3>
                             </div>
-                            <div class="">
-                                <span class="font-semibold">{{ label_case($field_name = 'mobile') }}: </span>
-                                <span class="">{{ $$module_name_singular->$field_name }}</span>
+                            <div class="card-body pt-1">
+                                <img class="img-fluid rounded mb-n5" style="width: 12rem; height: 12rem; object-fit: cover;"
+                                    src="{{ asset($$module_name_singular->avatar) }}" alt="{{ $$module_name_singular->name }}" />
+                                
+                                @php
+                                $profiles = json_decode($$module_name_singular->social_profiles, true);
+                                @endphp
+                                @if (isset($profiles['website']))
+                                <a class="d-block text-primary mb-2" href="{{ $profiles['website'] }}" target="_blank">
+                                    {{ $profiles['website'] }}
+                                </a>
+                                @endif
+
+                                <div class="d-flex justify-content-center pt-3 mt-3 text-secondary">
+                                    @if (isset($profiles['facebook']))
+                                    <a href="{{ $profiles['facebook'] }}" target="_blank" class="mx-2" title="Facebook">
+                                        <i class="fab fa-facebook fa-2x"></i>
+                                    </a>
+                                    @endif
+                                    @if (isset($profiles['twitter']))
+                                    <a href="{{ $profiles['twitter'] }}" target="_blank" class="mx-2" title="Twitter">
+                                        <i class="fab fa-twitter fa-2x"></i>
+                                    </a>
+                                    @endif
+                                    @if (isset($profiles['instagram']))
+                                    <a href="{{ $profiles['instagram'] }}" target="_blank" class="mx-2" title="Instagram">
+                                        <i class="fab fa-instagram fa-2x"></i>
+                                    </a>
+                                    @endif
+                                    @if (isset($profiles['linkedin']))
+                                    <a href="{{ $profiles['linkedin'] }}" target="_blank" class="mx-2" title="LinkedIn">
+                                        <i class="fab fa-linkedin fa-2x"></i>
+                                    </a>
+                                    @endif
+                                </div>
+
+                                @auth
+                                @if (auth()->user()->id == $$module_name_singular->id)
+                                <div class="mt-4">
+                                    <a href="{{ route('frontend.users.profileEdit') }}" class="btn btn-outline-dark btn-block">
+                                        <i class="fas fa-user-edit mr-1"></i> Edit Profile
+                                    </a>
+                                </div>
+                                @endif
+                                @if (auth()->user()->username == $$module_name_singular->username)
+                                <div class="mt-2">
+                                    <a href="{{ route('frontend.users.changePassword') }}" class="btn btn-outline-dark btn-block">
+                                        <i class="fas fa-key mr-1"></i> Change Password
+                                    </a>
+                                </div>
+                                @endif
+                                @endauth
                             </div>
                         </div>
-                        <div class="flex justify-between p-4">
-                            <div class="">
-                                <span class="font-semibold">{{ label_case($field_name = 'date_of_birth') }}: </span>
-                                <span
-                                    class="">{{ optional($$module_name_singular->$field_name)->toFormattedDateString() }}</span>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="col-md-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header">
+                                <h3 class="card-title mb-4">Profile</h3>
                             </div>
-                            <div class="">
-                                <span class="font-semibold">{{ label_case($field_name = 'gender') }}: </span>
-                                <span class="">{{ $$module_name_singular->$field_name }}</span>
+                            <div class="card-body">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <strong>{{ label_case($field_name = 'first_name') }}:</strong>
+                                        <span>{{ $$module_name_singular->$field_name }}</span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>{{ label_case($field_name = 'last_name') }}:</strong>
+                                        <span>{{ $$module_name_singular->$field_name }}</span>
+                                    </div>
+                                </div>
+
+                                @auth
+                                @if (auth()->user()->id == $$module_name_singular->id)
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <strong>{{ label_case($field_name = 'email') }}:</strong>
+                                        <span>{{ $$module_name_singular->$field_name }}</span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>{{ label_case($field_name = 'mobile') }}:</strong>
+                                        <span>{{ $$module_name_singular->$field_name }}</span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <strong>{{ label_case($field_name = 'date_of_birth') }}:</strong>
+                                        <span>{{ optional($$module_name_singular->$field_name)->toFormattedDateString() }}</span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>{{ label_case($field_name = 'gender') }}:</strong>
+                                        <span>{{ $$module_name_singular->$field_name }}</span>
+                                    </div>
+                                </div>
+                                @endif
+                                @endauth
+
+                                <div>
+                                    <strong>{{ label_case($field_name = 'bio') }}</strong>
+                                    <p class="mb-0">{{ $$module_name_singular->$field_name }}</p>
+                                </div>
                             </div>
                         </div>
-                    @endif
-                @endauth
-                <div class="flex flex-col justify-between p-4">
-                    <div class="font-semibold">
-                        {{ label_case($field_name = 'bio') }}
-                    </div>
-                    <div class="">
-                        {{ $$module_name_singular->$field_name }}
                     </div>
                 </div>
             </div>
+
+
         </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.2.0
+            </div>
+        </footer>
     </div>
-@endsection
+    <!-- ./wrapper -->
+</body>
+<!-- <script src="{{ asset('bootstrap-5.0.2-dist\js\bootstrap.min.js') }}"></script> -->
+<!-- jQuery -->
+<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- ChartJS -->
+<script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
+<!-- Sparkline -->
+<script src="{{asset('plugins/sparklines/sparkline.js')}}"></script>
+<!-- JQVMap -->
+<script src="{{asset('plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+<script src="{{asset('plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+<!-- daterangepicker -->
+<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<!-- Summernote -->
+<script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('dist/js/adminlte.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{asset('dist/js/demo.js')}}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
 
-@push('after-scripts')
-    <script type="module" src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
-@endpush
+</html>

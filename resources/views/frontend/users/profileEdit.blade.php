@@ -1,288 +1,397 @@
-@extends('frontend.layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title')
-    Edit {{ $$module_name_singular->name }}'s Profile
-@endsection
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{{asset('plugins/jqvmap/jqvmap.min.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
+    <!-- <link rel="stylesheet" href="{{asset('bootstrap-5.0.2-dist\css\bootstrap.min.css')}}"> -->
+</head>
 
-@section('content')
-    <div class="container mx-auto flex justify-center">
+<body>
+    <div class="wrapper">
+        <form id="logout-form" style="display: none;" action="{{ route('logout') }}" method="POST">
+            {{ csrf_field() }}
+        </form>
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+        </div>
 
-        @include('frontend.includes.messages')
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-dark">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <!-- <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Quisoner</a>
+                </li> -->
+            </ul>
 
-    </div>
-    <div class="container mx-auto max-w-7xl px-4 py-10 sm:px-6">
-        <div class="mb-10 sm:grid sm:grid-cols-3 sm:gap-6">
-            <div class="sm:col-span-1">
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-xl font-semibold leading-6 text-gray-800 dark:text-gray-200">@lang('Edit Profile')</h3>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        @lang('This information will be displayed publicly so be careful what you share.')
-                    </p>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
 
-                    <div class="pt-4 text-center">
-                        <a href='{{ route('frontend.users.profile') }}'>
-                            <div
-                                class="w-full rounded border-2 border-gray-900 px-6 py-2 text-sm font-semibold text-gray-500 transition duration-200 ease-in hover:bg-gray-800 hover:text-white focus:outline-none dark:border-gray-500">
-                                @lang(' View Profile')
-                            </div>
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="profile/100001" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> My Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fa fa-sign-out-alt"></i> LOGOUT
                         </a>
                     </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <!-- <a href="index3.html" class="brand-link"> -->
+            <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+            <!-- <span class="brand-text font-weight-light">AdminLTE 3</span> -->
+            <!-- </a> -->
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Kuisoner</a>
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+                <!-- <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                <button class="btn btn-sidebar">
+                    <i class="fas fa-search fa-fw"></i>
+                </button>
                 </div>
             </div>
-            <div class="mt-5 sm:col-span-2 sm:mt-0">
-                {{ html()->modelForm($$module_name_singular, 'PATCH', route('frontend.users.profileUpdate'))->acceptsFiles()->open() }}
-                <div class="mb-8 rounded-lg border bg-white p-6 shadow-lg dark:bg-gray-100">
-                    <div class="grid grid-cols-6 gap-6">
+            </div> -->
 
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'first_name';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = 'required';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                    with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="{{route('frontend.index')}}" class="nav-link active">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="fa fa-clipboard-list"></i>
+                                <p>Kuisoner<i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.keuangan')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>KEUANGAN</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.pelanggan')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>PELANGGAN</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.internal')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>PROSES INTERNAL</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('frontend.questionnaire.pertumbuhan')}}" class="nav-link">
+                                        <i class="fa fa-arrow-right nav-icon"></i>
+                                        <p>PEMBELAJARAN DAN PERTUMBUHAN</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
 
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'last_name';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = 'required';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <div class="container d-flex justify-content-center">
+                @include('frontend.includes.messages')
+            </div>
 
-                        <div class="col-span-6">
-                            <?php
-                            $field_name = 'address';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
+            <div class="container px-3 py-5">
+                <div class="row mb-5">
+                    <div class="col-md-4">
+                        <h3 class="h5 font-weight-bold text-dark">@lang('Edit Profile')</h3>
+                        <p class="text-muted small mt-2">
+                            @lang('This information will be displayed publicly so be careful what you share.')
+                        </p>
+                        <div class="pt-3 text-center">
+                            <a href='{{ route('frontend.users.profile') }}'>
+                                <div class="btn btn-outline-dark btn-block font-weight-semibold">
+                                    @lang(' View Profile')
+                                </div>
+                            </a>
                         </div>
-
-                        <div class="col-span-6">
-                            <?php
-                            $field_name = 'url_website';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
-
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'url_facebook';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
-
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'url_twitter';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
-
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'url_linkedin';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
-
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'url_instagram';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
-                        <div class="col-span-6">
-                            <?php
-                            $field_name = 'bio';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->textarea($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required", 'rows' => 5]) }}
-                        </div>
-
                     </div>
-                    <div class="mt-4 grid grid-cols-6 gap-6">
 
-                        <div class="col-span-6 sm:col-span-2">
+                    <div class="col-md-8 mt-4 mt-md-0">
+                        @php
+                        $profiles = json_decode($$module_name_singular->social_profiles, true);
+                        @endphp
+                        {{ html()->modelForm($$module_name_singular, 'PATCH', route('frontend.users.profileUpdate'))->acceptsFiles()->open() }}
+                        <div class="card shadow-sm mb-5">
+                            <div class="card-body">
+                                <div class="form-row">
+                                    {{-- First Name --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="first_name">{{ label_case('first_name') }}</label>
+                                        <span class="text-danger">*</span>
+                                        <input type="text" class="form-control" name="first_name" id="first_name" placeholder="{{ label_case('first_name') }}" required value="{{ old('first_name', $user->first_name) }}">
+                                    </div>
 
-                            <label class="block text-sm font-medium text-gray-700">
-                                Photo
-                            </label>
+                                    {{-- Last Name --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="last_name">{{ label_case('last_name') }}</label>
+                                        <span class="text-danger">*</span>
+                                        <input type="text" class="form-control" name="last_name" id="last_name" placeholder="{{ label_case('last_name') }}" required value="{{ old('last_name', $user->last_name) }}">
+                                    </div>
 
-                            <span class="mt-1 inline-block h-24 w-24 overflow-hidden rounded bg-gray-100 object-cover">
-                                <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}">
+                                    {{-- Address --}}
+                                    <div class="form-group col-md-12">
+                                        <label for="address">{{ label_case('address') }}</label>
+                                        <input type="text" class="form-control" name="address" id="address" placeholder="{{ label_case('address') }}" value="{{ old('address', $user->address) }}">
+                                    </div>
 
+                                    {{-- URL Website --}}
+                                    <div class="form-group col-md-12">
+                                        <label for="url_website">{{ label_case('url_website') }}</label>
+                                        <input type="text" class="form-control" name="url_website" id="url_website" placeholder="{{ label_case('url_website') }}" value="{{ old('url_website', $profiles['website'] ?? '') }}">
+                                    </div>
 
-                                <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                                </svg>
-                            </span>
-                        </div>
+                                    {{-- Facebook --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="url_facebook">{{ label_case('url_facebook') }}</label>
+                                        <input type="text" class="form-control" name="url_facebook" id="url_facebook" placeholder="{{ label_case('url_facebook') }}" value="{{ old('url_facebook', $profiles['facebook'] ?? '') }}">
+                                    </div>
 
-                        <div class="col-span-6 sm:col-span-4">
-                            <div class="sm:pt-6">
-                                <input
-                                    class="focus:border-primary focus:shadow-te-primary dark:focus:border-primary relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:text-neutral-700 focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100"
-                                    id="avatar" name="avatar" type="file" aria-describedby="avatar">
+                                    {{-- Twitter --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="url_twitter">{{ label_case('url_twitter') }}</label>
+                                        <input type="text" class="form-control" name="url_twitter" id="url_twitter" placeholder="{{ label_case('url_twitter') }}" value="{{ old('url_twitter', $profiles['twitter'] ?? '') }}">
+                                    </div>
+
+                                    {{-- LinkedIn --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="url_linkedin">{{ label_case('url_linkedin') }}</label>
+                                        <input type="text" class="form-control" name="url_linkedin" id="url_linkedin" placeholder="{{ label_case('url_linkedin') }}" value="{{ old('url_linkedin', $profiles['linkedin'] ?? '') }}">
+                                    </div>
+
+                                    {{-- Instagram --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="url_instagram">{{ label_case('url_instagram') }}</label>
+                                        <input type="text" class="form-control" name="url_instagram" id="url_instagram" placeholder="{{ label_case('url_instagram') }}" value="{{ old('url_instagram', $profiles['instagram'] ?? '') }}">
+                                    </div>
+
+                                    {{-- Bio --}}
+                                    <div class="form-group col-md-12">
+                                        <label for="bio">{{ label_case('bio') }}</label>
+                                        <textarea class="form-control" id="bio" name="bio" rows="5" placeholder="{{ label_case('bio') }}">{{ old('bio', $user->bio) }}</textarea>
+                                    </div>
+                                </div>
+
+                                {{-- Avatar --}}
+                                <div class="form-row mt-4">
+                                    <div class="col-md-4">
+                                        <label class="font-weight-medium">Photo</label>
+                                        <div class="mt-2">
+                                            <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" class="img-thumbnail" style="width: 96px; height: 96px;">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8 mt-3 mt-md-0">
+                                        <div class="form-group">
+                                            <input type="file" class="form-control-file" id="avatar" name="avatar">
+                                            <small class="form-text text-muted mt-2">Upload an image as profile picture.</small>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="mt-1 text-sm text-gray-400" id="view_model_avatar_help">
-                                Upload an image as profile picture.
+                        </div>
+
+                        {{-- Personal Info --}}
+                        <div class="card shadow-sm mb-5">
+                            <div class="card-body">
+                                <div class="form-row">
+                                    {{-- Email (Disabled) --}}
+                                    <div class="form-group col-md-12">
+                                        <label for="email">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control bg-light" id="email" value="{{ $user->email }}" disabled>
+                                    </div>
+
+                                    {{-- Mobile --}}
+                                    <div class="form-group col-md-12">
+                                        <label for="mobile">{{ label_case('mobile') }}</label>
+                                        <input type="text" class="form-control" name="mobile" id="mobile" placeholder="{{ label_case('mobile') }}" value="{{ old('mobile', $user->mobile) }}">
+                                    </div>
+
+                                    {{-- Date of Birth --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="date_of_birth">{{ label_case('date_of_birth') }}</label>
+                                        <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" value="{{ old('date_of_birth', $user->date_of_birth ? \Carbon\Carbon::parse($user->date_of_birth)->toDateString() : '') }}">
+                                    </div>
+
+                                    {{-- Gender --}}
+                                    <div class="form-group col-md-6">
+                                        <label for="gender">{{ label_case('gender') }}</label>
+                                        <select class="form-control" name="gender" id="gender">
+                                            <option value="">-- Select an option --</option>
+                                            <option value="Female" {{ old('gender', $user->gender) == 'Female' ? 'selected' : '' }}>Female</option>
+                                            <option value="Male" {{ old('gender', $user->gender) == 'Male' ? 'selected' : '' }}>Male</option>
+                                            <option value="Other" {{ old('gender', $user->gender) == 'Other' ? 'selected' : '' }}>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="text-right mt-3">
+                                    <button type="submit" class="btn btn-primary">
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
+                        {{ html()->closeModelForm() }}
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="mb-10 sm:grid sm:grid-cols-3 sm:gap-6">
-            <div class="sm:col-span-1">
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium leading-6 text-gray-800 dark:text-gray-200">Personal Info</h3>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Information of this block will not be displayed publicly.
-                    </p>
+                {{-- Divider --}}
+                <div class="d-none d-sm-block" aria-hidden="true">
+                    <hr class="mb-5">
                 </div>
-            </div>
-            <div class="mt-5 sm:col-span-2 sm:mt-0">
-                <div class="mb-8 rounded-lg border bg-white p-6 shadow-lg dark:bg-gray-100">
-                    <div class="grid grid-cols-6 gap-6">
-                        <div class="col-span-6">
-                            <label class="block-inline text-sm font-medium text-gray-700" for="first_name">Email</label>
-                            <span class="text-danger text-red-600">*</span>
-                            <input
-                                class="mt-1 w-full rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 placeholder-gray-300 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                id="email" type="email" value="{{ $user->email }}" disabled>
-                        </div>
 
-                        <div class="col-span-6">
-                            <?php
-                            $field_name = 'mobile';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
-
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'date_of_birth';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = $field_lable;
-                            $required = '';
-                            $value = $user->date_of_birth == '' ? '' : \Carbon\Carbon::parse($user->date_of_birth)->toDateString();
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block-inline text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->text($field_name)->type('date')->value($value)->placeholder($field_placeholder)->class('mt-1 border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-100 text-gray-700 placeholder-gray-300 rounded border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent')->attributes(["$required"]) }}
-                        </div>
-
-                        <div class="col-span-6 sm:col-span-3">
-                            <?php
-                            $field_name = 'gender';
-                            $field_lable = label_case($field_name);
-                            $field_placeholder = '-- Select an option --';
-                            $required = '';
-                            $select_options = [
-                                'Female' => 'Female',
-                                'Male' => 'Male',
-                                'Other' => 'Other',
-                            ];
-                            ?>
-                            {{ html()->label($field_lable, $field_name)->class('block text-sm font-medium text-gray-700') }}
-                            {!! field_required($required) !!}
-                            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('mt-1 block w-full py-2 px-3 border border-gray-300 bg-white dark:bg-gray-100 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm')->attributes(["$required"]) }}
-                        </div>
-                    </div>
-                    <div class="mt-4 bg-gray-50 px-4 text-end sm:px-6">
-                        <button
-                            class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                            type="submit">
-                            Save
-                        </button>
-                    </div>
-                </div>
-                {{ html()->closeModelForm() }}
-            </div>
-        </div>
-
-        <div class="hidden sm:block" aria-hidden="true">
-            <div class="mb-10 py-4">
-                <div class="border-t border-gray-200"></div>
-            </div>
-        </div>
-
-        <div class="mb-10 mt-10 sm:mt-0">
-
-            <div class="sm:grid sm:grid-cols-3 sm:gap-6">
-                <div class="sm:col-span-1">
-                    <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-medium leading-6 text-gray-800 dark:text-gray-200">Account Settings</h3>
-                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                {{-- Account Settings --}}
+                <div class="row mb-5">
+                    <div class="col-md-4">
+                        <h3 class="h6 font-weight-bold text-dark">Account Settings</h3>
+                        <p class="text-muted small mt-2">
                             Update account information.
                         </p>
                     </div>
-                </div>
-                <div class="mt-5 sm:col-span-2 sm:mt-0">
-                    <div class="mb-8 rounded-lg border bg-white p-6 shadow-lg dark:bg-gray-100">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6 text-center">
-                                <a href="{{ route('frontend.users.changePassword') }}">
-                                    <div
-                                        class="w-full rounded border-2 border-gray-900 px-6 py-2 text-sm font-semibold text-gray-500 transition duration-200 ease-in hover:bg-gray-800 hover:text-white focus:outline-none">
-                                        Change Password
-                                    </div>
-                                </a>
+
+                    <div class="col-md-8 mt-4 mt-md-0">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <a href="{{ route('frontend.users.changePassword') }}">
+                                        <div class="btn btn-outline-dark btn-block font-weight-semibold">
+                                            Change Password
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
+
         </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.2.0
+            </div>
+        </footer>
     </div>
-@endsection
+    <!-- ./wrapper -->
+</body>
+<!-- <script src="{{ asset('bootstrap-5.0.2-dist\js\bootstrap.min.js') }}"></script> -->
+<!-- jQuery -->
+<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- ChartJS -->
+<script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
+<!-- Sparkline -->
+<script src="{{asset('plugins/sparklines/sparkline.js')}}"></script>
+<!-- JQVMap -->
+<script src="{{asset('plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+<script src="{{asset('plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+<!-- daterangepicker -->
+<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<!-- Summernote -->
+<script src="{{asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{asset('dist/js/adminlte.js')}}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{asset('dist/js/demo.js')}}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
+
+</html>

@@ -170,10 +170,6 @@ class UserController extends Controller
         $module_name_singular = Str::singular($module_name);
         $module_action = 'Profile Update';
 
-        if ($id !== auth()->user()->id) {
-            return redirect()->route('frontend.users.profile', encode_id($id));
-        }
-
         $request->validate([
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
@@ -183,11 +179,21 @@ class UserController extends Controller
         $module_name = $this->module_name;
         $module_name_singular = Str::singular($this->module_name);
 
-        if (! auth()->user()->can('edit_users')) {
-            $id = auth()->user()->id;
-        }
-
         $$module_name_singular = $module_model::findOrFail($id);
+        $$module_name_singular->first_name = $request->input('first_name');
+        $$module_name_singular->last_name = $request->input('last_name');
+        $$module_name_singular->address = $request->input('address');
+        $$module_name_singular->social_profiles = json_encode(array(
+            'facebook' => $request->input('url_facebook'),
+            'twitter' => $request->input('url_twitter'),
+            'instagram' => $request->input('url_instagram'),
+            'linkedin' => $request->input('url_linkedin'),
+            'website' => $request->input('url_website'),
+        ));
+        $$module_name_singular->bio = $request->input('bio');
+        $$module_name_singular->mobile = $request->input('mobile');
+        $$module_name_singular->gender = $request->input('gender');
+        $$module_name_singular->date_of_birth = $request->input('date_of_birth');
 
         // Handle Avatar upload
         if ($request->hasFile('avatar')) {
@@ -199,8 +205,9 @@ class UserController extends Controller
 
             $$module_name_singular->avatar = $media->getUrl();
 
-            $$module_name_singular->save();
         }
+
+        $$module_name_singular->save();
 
         return redirect()->route('frontend.users.profile', $$module_name_singular->username)->with('flash_success', 'Update successful!');
     }
@@ -257,7 +264,7 @@ class UserController extends Controller
             return redirect()->route('frontend.users.profile', encode_id(auth()->user()->id));
         }
 
-        $request->validate($request, [
+        $request->validate([
             'password' => 'required|confirmed|min:6',
         ]);
 
@@ -271,7 +278,8 @@ class UserController extends Controller
 
         $$module_name_singular->update($request_data);
 
-        return redirect()->route('frontend.users.profile', encode_id(auth()->user()->id))->with('flash_success', 'Update successful!');
+        // return redirect()->route('frontend.users.profile', encode_id(auth()->user()->id))->with('flash_success', 'Update successful!');
+        return redirect()->route('frontend.users.profile', $$module_name_singular->username)->with('flash_success', 'Update successful!');
     }
 
     /**
