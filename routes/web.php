@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\FrontendController;
-use App\Http\Controllers\Frontend\Quisoner\QuisonerController;
+use App\Http\Controllers\Frontend\Questionnaire\QuestionnaireController;
 use App\Http\Controllers\LanguageController;
 use App\Livewire\Privacy;
 use App\Livewire\Terms;
@@ -26,9 +26,6 @@ require __DIR__.'/auth.php';
 // home route
 Route::get('home', [FrontendController::class, 'index'])->name('home');
 
-// quisoner
-Route::get('quisoner', [QuisonerController::class, 'index'])->name('quisoner');
-
 // Language Switch
 Route::get('language/{language}', [LanguageController::class, 'switch'])->name('language.switch');
 
@@ -42,6 +39,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend', 'as' => 'frontend.
     Route::get('/', 'FrontendController@index')->name('index');
 
     Route::group(['middleware' => ['auth']], function () {
+        // Questionnaire
+        Route::get('questionnaire', [QuestionnaireController::class, 'index'])->name('questionnaire');
+        Route::post('questionnaire/answer', [QuestionnaireController::class, 'answer'])->name('questionnaire.answer');
+
         /*
         *
         *  Users Routes

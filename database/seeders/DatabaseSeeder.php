@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AuthTableSeeder::class);
         $this->call(RespondentTypeDatabaseSeeder::class);
         $this->call(QuestionnairetypeDatabaseSeeder::class);
+        $this->call(QuestionnaireDatabaseSeeder::class);
         Schema::enableForeignKeyConstraints();
 
         // User::factory()->create([
