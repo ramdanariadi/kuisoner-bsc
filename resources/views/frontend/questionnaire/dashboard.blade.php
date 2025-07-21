@@ -126,7 +126,13 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item menu-open">
+                        <li class="nav-item">
+                            <a href="{{route('frontend.questionnaire.index')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.index')) active @endif">
+                                <i class="fa fa-clipboard-list"></i>
+                                <p>Kuisoner</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open d-none">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-clipboard-list"></i>
                                 <p>Kuisoner<i class="right fas fa-angle-left"></i></p>

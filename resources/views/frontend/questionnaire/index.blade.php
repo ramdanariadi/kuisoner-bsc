@@ -122,7 +122,13 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item menu-open">
+                        <li class="nav-item">
+                            <a href="{{route('frontend.questionnaire.index')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.index')) active @endif">
+                                <i class="fa fa-clipboard-list"></i>
+                                <p>Kuisoner</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open d-none">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-clipboard-list"></i>
                                 <p>Kuisoner<i class="right fas fa-angle-left"></i></p>
@@ -229,7 +235,6 @@
                                     $questionnaireTmp = $questionnaire;
                                     $alphabetIndex++;
                                     @endphp
-                                    <input type="hidden" name="questionnaire_id" value="<?= $questionnaire->questionnaire_id ?>">
                                     <tr>
                                         <td colspan="7">
                                             <h2><?= $alphabet[$alphabetIndex] . "." . $questionnaireTmp->perspective ?></h2>
@@ -248,11 +253,11 @@
                                     <tr>
                                         <td><?= $alphabet[$alphabetIndex] . ++$statementIndex ?></td>
                                         <td class="statement"><?= $questionnaire->statement ?></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 1 ? 'checked' : '' ?> value="1" required></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 2 ? 'checked' : '' ?> value="2"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 3 ? 'checked' : '' ?> value="3"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 4 ? 'checked' : '' ?> value="4"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 5 ? 'checked' : '' ?> value="5"></td>
+                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 1 ? 'checked' : '' ?> value="1" required></td>
+                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 2 ? 'checked' : '' ?> value="2"></td>
+                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 3 ? 'checked' : '' ?> value="3"></td>
+                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 4 ? 'checked' : '' ?> value="4"></td>
+                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 5 ? 'checked' : '' ?> value="5"></td>
                                     </tr>
                                     @endforeach
                                 </tbody>

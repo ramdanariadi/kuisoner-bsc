@@ -40,6 +40,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend', 'as' => 'frontend.
 
     Route::group(['middleware' => ['auth']], function () {
         // Questionnaire
+        Route::get('questionnaire', [QuestionnaireController::class, 'index'])->name('questionnaire.index');
         Route::get('questionnaire/keuangan', [QuestionnaireController::class, 'keuangan'])->name('questionnaire.keuangan');
         Route::get('questionnaire/pelanggan', [QuestionnaireController::class, 'pelanggan'])->name('questionnaire.pelanggan');
         Route::get('questionnaire/internal', [QuestionnaireController::class, 'internal'])->name('questionnaire.internal');
