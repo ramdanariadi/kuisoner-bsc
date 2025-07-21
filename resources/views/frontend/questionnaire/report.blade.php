@@ -175,116 +175,141 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            @if($questionnaires)
-                            @php
-                            $questionnaire = $questionnaires[0];
-                            $questionnaireId = $questionnaire ? $questionnaire->questionnaire_id : null;
-                            $questionnaireTitle = $questionnaire ? $questionnaire->title : null;
-                            $questionnaireRespondent = $questionnaire ? $questionnaire->respondent : null;
-                            $perspective = $questionnaire ? $questionnaire->perspective : null;
-                            @endphp
-                            @endif
-                            <h1 class="m-0"><?= $perspective ?></h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <!-- <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Kuisoner 1</li> -->
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+            <div class="card shadow">
+    <div class="card-body">
+        <h2 class="h4 font-weight-bold text-dark mb-4">Sistem Penilaian BSC</h2>
 
-            <!-- Main content -->
-            <div class="content">
-                <div class="container-fluid">
-                    @if($questionnaires)
-                    <div class="row">
-                        <h1 class="w-100"><?= $questionnaireTitle ?></h1>
-                        <p class="w-100"><strong>Responden:</strong> <?= $questionnaireRespondent ?></p>
-                        <p class="w-100 mb-0"><strong>Petunjuk Pengisian:</strong></p>
-                        <ol class="w-100">
-                            <li>Bacalah setiap pernyataan dengan saksama.</li>
-                            <li>Pilih angka yang sesuai dengan pendapat Anda.</li>
-                            <li>
-                                Skala Yang Digunakan:<br>
-                                <ul>
-                                    <li>1 = Sangat Tidak Setuju / Sangat Buruk / Sangat Tidak Efektif</li>
-                                    <li>2 = Tidak Setuju / Buruk / Tidak Efektif</li>
-                                    <li>3 = Cukup Setuju / Cukup Baik / Cukup Efektif</li>
-                                    <li>4 = Setuju / Baik / Efektif</li>
-                                    <li>5 = Sangat Setuju / Sangat Baik / Sangat Efektif</li>
-                                </ul>
-                            </li>
-                        </ol>
+        <!-- Scoring Overview -->
+        <div class="row mb-4">
+            <div class="col-lg-6 mb-3">
+                <h5 class="font-weight-bold text-dark mb-3">Bobot Perspektif</h5>
+                <div class="mb-2 p-3 bg-success bg-opacity-10 rounded">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-white">Keuangan</span>
+                        <span class="font-weight-bold text-white">25%</span>
                     </div>
-                    <div class="row">
-                        <form action="#" method="post">
-                            <table class="table">
-                                <tbody>
-                                    @php
-                                    $alphabet = range('A', 'Z');
-                                    $alphabetIndex = -1;
-                                    $statementIndex = 0;
-                                    $questionnaireTmp = null;
-                                    @endphp
-                                    @foreach($questionnaires as $questionnaire)
-                                    @if($questionnaireTmp == null || $questionnaireTmp->perspective != $questionnaire->perspective)
-                                    @php
-                                    $questionnaireTmp = $questionnaire;
-                                    $alphabetIndex++;
-                                    @endphp
-                                    <tr>
-                                        <td colspan="7">
-                                            <h2><?= $alphabet[$alphabetIndex] . "." . $questionnaireTmp->perspective ?></h2>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>No</th>
-                                        <th class="statement">Pernyataan</th>
-                                        <th>1</th>
-                                        <th>2</th>
-                                        <th>3</th>
-                                        <th>4</th>
-                                        <th>5</th>
-                                    </tr>
-                                    @endif
-                                    <tr>
-                                        <td><?= $alphabet[$alphabetIndex] . ++$statementIndex ?></td>
-                                        <td class="statement"><?= $questionnaire->statement ?></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 1 ? 'checked' : '' ?> value="1" required></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 2 ? 'checked' : '' ?> value="2"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 3 ? 'checked' : '' ?> value="3"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 4 ? 'checked' : '' ?> value="4"></td>
-                                        <td><input type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 5 ? 'checked' : '' ?> value="5"></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="6"></td>
-                                        <td>
-                                            <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Simpan</button>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </form>
-
-                    </div>
-                    @endif
-                    <!-- /.row -->
                 </div>
-                <!-- /.container-fluid -->
+                <div class="mb-2 p-3 bg-primary bg-opacity-10 rounded">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-white">Pelanggan</span>
+                        <span class="font-weight-bold text-white">30%</span>
+                    </div>
+                </div>
+                <div class="mb-2 p-3 bg-purple bg-opacity-10 rounded">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-white">Proses Internal</span>
+                        <span class="font-weight-bold text-white">25%</span>
+                    </div>
+                </div>
+                <div class="mb-2 p-3 bg-warning bg-opacity-10 rounded">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-white">Pembelajaran &amp; Pertumbuhan</span>
+                        <span class="font-weight-bold text-white">20%</span>
+                    </div>
+                </div>
             </div>
-            <!-- /.content -->
+            <div class="col-lg-6">
+                <h5 class="font-weight-bold text-dark mb-3">Skala Penilaian</h5>
+                <div class="mb-2 d-flex align-items-center bg-success bg-opacity-25 rounded p-2">
+                    <div class="badge badge-light rounded-circle p-2 mr-3">5</div>
+                    <span class="text-white">Sangat Baik (81-100)</span>
+                </div>
+                <div class="mb-2 d-flex align-items-center bg-primary bg-opacity-25 rounded p-2">
+                    <div class="badge badge-light rounded-circle p-2 mr-3">4</div>
+                    <span class="text-white">Baik (61-80)</span>
+                </div>
+                <div class="mb-2 d-flex align-items-center bg-warning bg-opacity-25 rounded p-2">
+                    <div class="badge badge-light rounded-circle p-2 mr-3">3</div>
+                    <span class="text-white">Cukup (41-60)</span>
+                </div>
+                <div class="mb-2 d-flex align-items-center bg-orange bg-opacity-25 rounded p-2">
+                    <div class="badge badge-light rounded-circle p-2 mr-3">2</div>
+                    <span class="text-white">Kurang (21-40)</span>
+                </div>
+                <div class="mb-2 d-flex align-items-center bg-danger bg-opacity-25 rounded p-2">
+                    <div class="badge badge-light rounded-circle p-2 mr-3">1</div>
+                    <span class="text-white">Sangat Kurang (0-20)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Scores -->
+        <h5 class="font-weight-bold text-dark mb-3">Skor Saat Ini</h5>
+        <div class="row mb-4">
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-success bg-opacity-10 text-center p-3">
+                    <h3 class="text-white font-weight-bold">85</h3>
+                    <div class="text-white">Keuangan</div>
+                    <small class="text-white">Sangat Baik</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-primary bg-opacity-10 text-center p-3">
+                    <h3 class="text-white font-weight-bold">72</h3>
+                    <div class="text-white">Pelanggan</div>
+                    <small class="text-white">Baik</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-purple bg-opacity-10 text-center p-3">
+                    <h3 class="text-white font-weight-bold">78</h3>
+                    <div class="text-white">Proses Internal</div>
+                    <small class="text-white">Baik</small>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-3">
+                <div class="card bg-warning bg-opacity-10 text-center p-3">
+                    <h3 class="text-white font-weight-bold">68</h3>
+                    <div class="text-white">Pembelajaran</div>
+                    <small class="text-white">Baik</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Score Calculation -->
+        <div class="card bg-light p-4">
+            <h5 class="font-weight-bold text-dark mb-3">Perhitungan Skor Total</h5>
+            <?php 
+
+                // [
+                //     {
+                //         respondent: "Siswa",
+                //         perspective: "PERSPEKTIF KEUANGAN",
+                //         perspective_id: 1,
+                //         total_answers: 5,
+                //         average_value: "3.0000"
+                //     }
+                // ]
+
+                $totalScore = 0;
+                foreach ($reports as $report) {
+                    $weights = [
+                        0,
+                        25,
+                        30,
+                        25,
+                        20
+                    ];
+                    $score = $report->total_answers;
+                    $weight = $weights[$report->perspective_id] ?? 0;
+                    $weightedScore = $score * ($weight / 100);
+                    $totalScore += $weightedScore;
+                    echo "<div class='mb-2 d-flex justify-content-between'>
+                            <span>{$report->perspective} ({$score} × {$weight}%)</span>
+                            <span class='font-weight-bold'>{$weightedScore}</span>
+                          </div>";
+                }
+
+                echo "<hr>
+                      <div class='d-flex justify-content-between text-success font-weight-bold'>
+                          <span>Total Skor BSC</span>
+                          <span>{$totalScore}</span>
+                      </div>";
+
+            ?>
+        </div>
+    </div>
+</div>
         </div>
         <!-- /.content-wrapper -->
 
