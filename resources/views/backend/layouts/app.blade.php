@@ -76,8 +76,6 @@
         <!-- / Scripts -->
 
     </body>
-<<<<<<< HEAD
-=======
     <script>
         function copyToClipboard(textToCopy) {
             navigator.clipboard.writeText(textToCopy).then(function() {
@@ -87,7 +85,6 @@
             });
         }
     </script>
-@yield('custom-script')
->>>>>>> f9cf5033 (add copyToClipBoard script)
+    @yield('custom-script')
 
 </html>
