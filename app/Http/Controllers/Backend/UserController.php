@@ -221,6 +221,7 @@ class UserController extends Controller
         $validated_data = $request->validate([
             'first_name' => 'required|min:3|max:191',
             'last_name' => 'required|min:3|max:191',
+            'school_id' => 'required',
             'email' => 'required|email:rfc,dns|regex:/(.+)@(.+)\.(.+)/i|max:191|unique:users',
             'password' => 'required|confirmed|min:6',
             'roles' => 'nullable|array',
@@ -445,6 +446,7 @@ class UserController extends Controller
         $validated_data = $request->validate([
             'first_name' => 'required|min:3|max:191',
             'last_name' => 'required|min:3|max:191',
+            'school_id' => 'required',
             'email' => 'required|email:rfc,dns|regex:/(.+)@(.+)\.(.+)/i|max:191|unique:users,email,'.$id,
             'roles' => 'nullable|array',
             'permissions' => 'nullable|array',

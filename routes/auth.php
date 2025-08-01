@@ -19,6 +19,8 @@ if (user_registration()) {
             ->name('register');
 
         Route::post('register', [RegisteredUserController::class, 'store']);
+        Route::get('school', [RegisteredUserController::class, 'index_list'])
+            ->name('frontend.schools.index_list');
     });
 }
 
