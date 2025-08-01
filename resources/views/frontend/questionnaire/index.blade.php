@@ -241,20 +241,22 @@
                                     $questionnaireTmp = $questionnaire;
                                     $alphabetIndex++;
                                     @endphp
-                                    <tr>
-                                        <td colspan="7">
-                                            <h2><?= $alphabet[$alphabetIndex] . "." . $questionnaireTmp->perspective ?></h2>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>No</th>
-                                        <th class="statement">Pernyataan</th>
-                                        <th>1</th>
-                                        <th>2</th>
-                                        <th>3</th>
-                                        <th>4</th>
-                                        <th>5</th>
-                                    </tr>
+                                    <thead>
+                                        <tr class="bg-success">
+                                            <th colspan="7">
+                                                <h2><?= $alphabet[$alphabetIndex] . "." . $questionnaireTmp->perspective ?></h2>
+                                            </th>
+                                        </tr>
+                                        <tr class="bg-success">
+                                            <th>No</th>
+                                            <th class="statement">Pernyataan</th>
+                                            <th>1</th>
+                                            <th>2</th>
+                                            <th>3</th>
+                                            <th>4</th>
+                                            <th>5</th>
+                                        </tr>
+                                    </thead>
                                     @endif
                                     <tr>
                                         <td><?= $alphabet[$alphabetIndex] . ++$statementIndex ?></td>

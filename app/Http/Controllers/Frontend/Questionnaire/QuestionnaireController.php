@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class QuestionnaireController extends Controller
 {
-    
+
     public function index()
     {
 
@@ -17,7 +17,10 @@ class QuestionnaireController extends Controller
             ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
             ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
             ->join('questionnaires as q', 's.questionnaire_id', '=', 'q.id')
-            ->leftJoin('user_answers as ua', 'ua.statement_id', '=', 's.id')
+            ->leftJoin('user_answers as ua', function ($join) {
+                $join->on('ua.statement_id', '=', 's.id')
+                    ->where('ua.user_id', '=', auth()->id());
+            })
             ->select([
                 'q.id as questionnaire_id',
                 'q.name as title',
@@ -32,7 +35,7 @@ class QuestionnaireController extends Controller
 
         return view('frontend.questionnaire.index', ['questionnaires' => $data]);
     }
-    
+
     public function keuangan()
     {
 
@@ -130,21 +133,92 @@ class QuestionnaireController extends Controller
     {
         $data = $request->all();
 
+        DB::beginTransaction();
+
         foreach ($data['answers'] as $questionnaire_id => $quiestionnaire) {
             foreach ($quiestionnaire as $questionnaire_type_id => $statement) {
+
+                $type = DB::table('questionnairetypes')
+                    ->where('id', $questionnaire_type_id)->first();
+
+                if (!$type) {
+                    DB::rollBack();
+                    return false;
+                }
+
+                $count = DB::table('user_answers')
+                    ->where('questionnaire_id', $questionnaire_id)
+                    ->where('questionnaire_type_id', $questionnaire_type_id)
+                    ->where('user_id', auth()->id())
+                    ->where('year', now()->year)
+                    ->where('semester', now()->month > 6 ? 1 : 2)
+                    ->where('school_id', auth()->user()->school_id)
+                    ->sum('value');
+
+                $score = 0;
                 foreach ($statement as $statement_id => $value) {
                     DB::table('user_answers')->updateOrInsert(
-                        ['statement_id' => $statement_id, 'questionnaire_id' => $questionnaire_id, 'questionnaire_type_id' => $questionnaire_type_id, 'user_id' => auth()->id()],
+                        [
+                            'statement_id' => $statement_id,
+                            'questionnaire_id' => $questionnaire_id,
+                            'questionnaire_type_id' => $questionnaire_type_id,
+                            'user_id' => auth()->id(),
+                            'year' => now()->year,
+                            'semester' => now()->month > 6 ? 1 : 2,
+                            'school_id' => auth()->user()->school_id
+                        ],
                         ['value' => $value]
                     );
+                    $score += $value;
                 }
-            }   
+
+                $total = 0;
+                if (!$count) {
+                    $count = 0;
+                    $total = 1;
+                }
+
+                $row = DB::table('school_scores')
+                    ->where('school_id', auth()->user()->school_id)
+                    ->where('questionnaire_type_id', $questionnaire_type_id)
+                    ->where('year', now()->year)
+                    ->where('semester', now()->month > 6 ? 1 : 2)
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($row) {
+                    DB::table('school_scores')
+                        ->where('school_id', auth()->user()->school_id)
+                        ->where('questionnaire_type_id', $questionnaire_type_id)
+                        ->where('year', now()->year)
+                        ->where('semester', now()->month > 6 ? 1 : 2)
+                        ->update([
+                            'score' => DB::raw('score - ' . $count . '+' . $score),
+                            'total' => DB::raw('total + ' . $total),
+                            'updated_by' => auth()->id(),
+                            'updated_at' => now()
+                        ]);
+                } else {
+                    DB::table('school_scores')->insert([
+                        'school_id' => auth()->user()->school_id,
+                        'questionnaire_type_id' => $questionnaire_type_id,
+                        'score' => $score,
+                        'multiple_by' => $type->weight_value,
+                        'total' => 1,
+                        'semester' => now()->month > 6 ? 1 : 2,
+                        'year' => now()->year,
+                        'created_by' => auth()->id(),
+                        'created_at' => now()
+                    ]);
+                }
+            }
         }
 
-        // return redirect()->route('frontend.questionnaire')->with('success', 'Jawaban berhasil disimpan.');
+        DB::commit();
     }
 
-    public function report(){
+    public function report()
+    {
         $data = DB::table('statements as s')
             ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
             ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
@@ -159,17 +233,6 @@ class QuestionnaireController extends Controller
             ])
             ->groupBy('qt.id', 'rt.name', 'qt.name')
             ->get();
-        // echo json_encode($data);exit;
-
-        // [
-        //     {
-        //         respondent: "Siswa",
-        //         perspective: "PERSPEKTIF KEUANGAN",
-        //         perspective_id: 1,
-        //         total_answers: 5,
-        //         average_value: "3.0000"
-        //     }
-        // ]
 
         return view('frontend.questionnaire.report', ['reports' => $data]);
     }
