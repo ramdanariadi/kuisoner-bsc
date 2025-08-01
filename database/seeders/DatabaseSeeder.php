@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Modules\Questionnaire\database\seeders\QuestionnaireDatabaseSeeder;
 use Modules\Questionnairetype\database\seeders\QuestionnairetypeDatabaseSeeder;
 use Modules\RespondentType\database\seeders\RespondentTypeDatabaseSeeder;
+use Modules\School\database\seeders\SchoolDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RespondentTypeDatabaseSeeder::class);
         $this->call(QuestionnairetypeDatabaseSeeder::class);
         $this->call(QuestionnaireDatabaseSeeder::class);
+        $this->call(SchoolDatabaseSeeder::class);
         Schema::enableForeignKeyConstraints();
 
         // User::factory()->create([
