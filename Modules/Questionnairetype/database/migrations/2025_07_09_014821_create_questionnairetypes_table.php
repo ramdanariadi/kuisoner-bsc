@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
+            $table->float('weight_value')->default(1.0);
+            $table->float('target');
             $table->text('description')->nullable();
             $table->tinyInteger('status')->default(1);
 
