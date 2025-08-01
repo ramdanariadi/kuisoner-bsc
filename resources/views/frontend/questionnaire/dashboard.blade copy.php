@@ -195,6 +195,108 @@
             <!-- Main content -->
             <div class="content">
                 <div class="container-fluid">
+                    <!-- $data = [
+                        'userCount' => $userCount,
+                        'userCompleted' => $userCompleted,
+                        'totalScore' => $totalScore,
+                    ]; -->
+                    <!-- KPI Card Section -->
+                    <div class="row mb-4 d-none">
+                        <!-- Total Responden -->
+                        <!-- <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card shadow border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="bg-success bg-opacity-25 p-3 rounded-circle">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-muted small">vs Target</div>
+                                            <div class="text-success font-weight-bold">+{{($userCount - $userCountMonth)/$userCount*100}}%</div>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title text-dark font-weight-bold w-100">Total Responden</h5>
+                                    <p class="display-4 text-success font-weight-bold">{{$userCount}}</p>
+                                    <div class="d-float">
+                                        <div class="progress mb-1" style="height: 13px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ $userCount/100*100 }}%">{{ $userCount/100*100 }}%</div>
+                                        </div>
+                                    </div>
+                                    <small class="text-success">+{{($userCount - $userCountMonth)/$userCount*100}}% dari bulan lalu</small>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Selesai -->
+                        <!-- <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card shadow border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="bg-info bg-opacity-25 p-3 rounded-circle">
+                                            <i class="fas fa-check-circle"></i>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-muted small">Completion Rate</div>
+                                            <div class="text-info font-weight-bold">76.5%</div>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title text-dark font-weight-bold w-100">Selesai</h5>
+                                    <p class="display-4 text-info font-weight-bold">189</p>
+                                    <div class="progress mb-1" style="height: 13px;">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 76.5%">76.5%</div>
+                                    </div>
+                                    <small class="text-info">+8% dari target</small>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Dalam Proses -->
+                        <!-- <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card shadow border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="bg-warning bg-opacity-25 p-3 rounded-circle">
+                                            <i class="far fa-clock"></i>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-muted small">Avg. Time</div>
+                                            <div class="text-warning font-weight-bold">15 min</div>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title text-dark font-weight-bold w-100">Dalam Proses</h5>
+                                    <p class="display-4 text-warning font-weight-bold">58</p>
+                                    <div class="progress mb-1" style="height: 13px;">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 60%">60%</div>
+                                    </div>
+                                    <small class="text-warning">Deadline 3 hari</small>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- Skor BSC -->
+                        <!-- <div class="col-md-6 col-lg-3 mb-4">
+                            <div class="card shadow border-0">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="bg-primary bg-opacity-25 p-3 rounded-circle">
+                                            <i class="fas fa-percentage"></i>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-muted small">Trend</div>
+                                            <div class="text-danger font-weight-bold">-{{ 100-($totalScore > 80 ? 0 : $totalScore)/80*100 }}%</div>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-title text-dark font-weight-bold w-100">Skor BSC</h5>
+                                    <p class="display-4 text-primary font-weight-bold">{{ $totalScore }}</p>
+                                    <div class="progress mb-1" style="height: 13px;">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $totalScore }}%">{{ $totalScore }}%</div>
+                                    </div>
+                                    <small class="text-muted">Target: 80.0</small>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
                     <div class="row mt-2 bg-white rounded shadow p-4 mb-4">
                         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
                             <h3 class="h5 font-weight-bold text-dark">Benchmarking Skor BSC Antar Sekolah</h3>
@@ -209,67 +311,29 @@
                         </div>
 
                         <div class="col-12 row">
-                            <?php
-                            $style = [
-                                [
-                                    'border' => 'border-primary',
-                                    'bg' => 'bg-primary',
-                                    'icon' => 'fas fa-school',
-                                    'text' => 'text-primary',
-                                    'rank' => 'Peringkat #1',
-                                    'rank_en' => 'Champion',
-                                ],
-                                [
-                                    'border' => 'border-warning',
-                                    'bg' => 'bg-warning',
-                                    'icon' => 'fas fa-trophy',
-                                    'text' => 'text-warning',
-                                    'rank' => 'Peringkat #2',
-                                    'rank_en' => 'Runner Up',
-                                ],
-                                [
-                                    'border' => 'border-secondary',
-                                    'bg' => 'bg-secondary',
-                                    'icon' => 'fas fa-medal',
-                                    'text' => 'text-secondary',
-                                    'rank' => 'Peringkat #3',
-                                    'rank_en' => 'Third Place',
-                                ],
-                                [
-                                    'border' => 'border-success',
-                                    'bg' => 'bg-success',
-                                    'icon' => 'fas fa-chart-line',
-                                    'text' => 'text-success',
-                                    'rank' => 'BENCHMARK NASIONAL'
-                                ]
-                            ];
-                            ?>
-                            <?php foreach ($schoolScores as $key => $school): if ($key > 2) break; ?>
-                                <!-- Sekolah Anda -->
-                                <div class="col-md-6 col-lg-3 mb-4">
-                                    <div class="border {{ $style[$key]['border'] }} bg-light rounded p-3">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="{{ $style[$key]['bg'] }} text-white p-2 rounded-circle">
-                                                <i class="{{ $style[$key]['icon'] }}"></i>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="small {{ $style[$key]['text'] }}">{{auth()->check() ? (auth()->user()->school_id == $school->id ? 'SEKOLAH ANDA' : $style[$key]['rank_en']) : $style[$key]['rank_en']}}</div>
-                                                <div class="font-weight-bold {{ $style[$key]['text'] }}">Peringkat #{{ $key + 1 }}</div>
-                                            </div>
+                            <!-- Sekolah Anda -->
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="border border-primary bg-light rounded p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="bg-primary text-white p-2 rounded-circle">
+                                            <i class="fas fa-school"></i>
                                         </div>
-                                        <h5 class="{{ $style[$key]['text'] }}">{{ $school->name }}</h5>
-                                        <p class="h3 font-weight-bold {{ $style[$key]['text'] }}">{{ $school->score }}</p>
-                                        <div class="progress mb-1" style="height: 10px;">
-                                            <div class="progress-bar {{ $style[$key]['bg'] }}" style="width: <?= $school->score ?>%;"></div>
+                                        <div class="text-right">
+                                            <div class="small text-primary">SEKOLAH ANDA</div>
+                                            <div class="font-weight-bold text-primary">Peringkat #3</div>
                                         </div>
-                                        <p class="small text-danger mb-0"><i class="fas fa-arrow-down mr-1"></i>-2.1% dari Q3</p>
                                     </div>
+                                    <h5 class="text-primary">SMA Negeri 1 Jakarta</h5>
+                                    <p class="h3 font-weight-bold text-primary">76.8</p>
+                                    <div class="progress mb-1" style="height: 10px;">
+                                        <div class="progress-bar bg-primary" style="width: 76.8%;"></div>
+                                    </div>
+                                    <p class="small text-danger mb-0"><i class="fas fa-arrow-down mr-1"></i>-2.1% dari Q3</p>
                                 </div>
-
-                            <?php endforeach; ?>
+                            </div>
 
                             <!-- Peringkat 1 -->
-                            <div class="col-md-6 col-lg-3 mb-4 d-none">
+                            <div class="col-md-6 col-lg-3 mb-4">
                                 <div class="border border-warning bg-light rounded p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <div class="bg-warning text-white p-2 rounded-circle">
@@ -290,7 +354,7 @@
                             </div>
 
                             <!-- Peringkat 2 -->
-                            <div class="col-md-6 col-lg-3 mb-4 d-none">
+                            <div class="col-md-6 col-lg-3 mb-4">
                                 <div class="border border-secondary bg-light rounded p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <div class="bg-secondary text-white p-2 rounded-circle">
@@ -319,19 +383,18 @@
                                         </div>
                                         <div class="text-right">
                                             <div class="small text-success">BENCHMARK</div>
-                                            <div class="font-weight-bold text-success">Sekolah</div>
+                                            <div class="font-weight-bold text-success">Nasional</div>
                                         </div>
                                     </div>
-                                    <h5 class="text-success">Rata-rata Sekolah</h5>
-                                    <p class="h3 font-weight-bold text-success">{{$schoolAvg}}</p>
+                                    <h5 class="text-success">Rata-rata Nasional</h5>
+                                    <p class="h3 font-weight-bold text-success">71.5</p>
                                     <div class="progress mb-1" style="height: 10px;">
-                                        <div class="progress-bar bg-success" style="width: <?= $schoolAvg ?>%;"></div>
+                                        <div class="progress-bar bg-success" style="width: 71.5%;"></div>
                                     </div>
                                     <p class="small text-success mb-0"><i class="fas fa-arrow-up mr-1"></i>+0.9% dari Q3</p>
                                 </div>
                             </div>
 
-                            @if(auth()->check())
                             <div class="col-md-6 col-lg-6 mb-4">
                                 <!-- Benchmarking Analysis -->
                                 <div class="mt-4 p-3 bg-light border-left border-primary rounded">
@@ -339,15 +402,15 @@
                                         <div class="bg-primary text-white p-1 rounded-circle mr-2">
                                             <i class="fas fa-chart-bar"></i>
                                         </div>
-                                        <div class="w-100">
+                                        <div>
                                             <h5 class="text-primary font-weight-bold mb-2">Analisis Benchmarking</h5>
                                             <div class="row text-muted small">
                                                 <div class="col-md-6 mb-2">
-                                                    <div><strong>Posisi Anda:</strong> Peringkat {{$yourSchoolScores->position}} dari {{count($schoolScores)}} sekolah</div>
-                                                    <div><strong>Gap dengan #1:</strong> {{$yourSchoolScores->score_gap_with_first_school}} poin ({{$schoolScores->first()->name}})</div>
-                                                    <div><strong>@if($yourSchoolScores->score_gap_with_avg > 0)Di atas rata-rata:@else Di bawah rata-rata:@endif</strong> {{$yourSchoolScores->score_gap_with_avg}} poin sekolah</div>
+                                                    <p><strong>Posisi Anda:</strong> Peringkat 3 dari 25 sekolah</p>
+                                                    <p><strong>Gap dengan #1:</strong> 12.4 poin (SMA Negeri 3 Bandung)</p>
+                                                    <p><strong>Di atas rata-rata:</strong> +5.3 poin dari nasional</p>
                                                 </div>
-                                                <div class="col-md-6 mb-2 d-none">
+                                                <div class="col-md-6 mb-2">
                                                     <p><strong>Kekuatan:</strong> Perspektif Keuangan (85 - Rank #2)</p>
                                                     <p><strong>Area Perbaikan:</strong> Perspektif Pelanggan (72 - Rank #8)</p>
                                                     <p><strong>Target Q1 2025:</strong> Naik ke peringkat #2 (target: 82+)</p>
@@ -357,131 +420,6 @@
                                     </div>
                                 </div>
                             </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="mt-2 bg-white rounded shadow p-4 mb-4">
-                        <div class="col-12 d-flex justify-content-between align-items-center mb-4">
-                            <h3 class="h5 font-weight-bold text-dark">Perspektif BSC</h3>
-                        </div>
-                        @php
-                        $perspectives = [
-                        ['icon' => 'fas fa-dollar-sign', 'color' => 'success', 'border-color' => '#22c55e', 'linear-gradient' => 'linear-gradient(to bottom right, #f0fdf4, #dcfce7)'],
-                        ['icon' => 'fas fa-users', 'color' => 'primary', 'border-color' => '#3b82f6', 'linear-gradient' => 'linear-gradient(to bottom right, #eff6ff, #dbeafe)'],
-                        ['icon' => 'fas fa-cogs', 'color' => 'purple', 'border-color' => '#a855f7', 'linear-gradient' => 'linear-gradient(to bottom right, #f5f3ff, #ede9fe)'],
-                        ['icon' => 'fas fa-graduation-cap', 'color' => 'warning', 'border-color' => '#f97316', 'linear-gradient' => 'linear-gradient(to bottom right, #fff7ed, #ffedd5)']
-                        ];
-                        @endphp
-
-                        <div class="row mb-4">
-                            <?php foreach ($perfectiveBsc as $key => $perspective): ?>
-                                <div class="col-12 col-md-6 col-lg-3 mb-4">
-                                    <div class="card border-left-{{$perspectives[$key]['color']}} shadow p-3" style="background: <?= $perspectives[$key]['linear-gradient'] ?>; border-left: 4px solid <?= $perspectives[$key]['border-color'] ?>; border-radius: 1rem;">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <div class="p-3 rounded-circle text-white" style="background-color: <?= $perspectives[$key]['border-color'] ?>;">
-                                                <i class="{{ $perspectives[$key]['icon'] }} fa-lg"></i>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="text-muted small">Target: {{$perspective->target}}</div>
-                                                @php
-                                                $percentageChange = round(($perspective->score - $perspective->target) / $perspective->target * 100, 2);
-                                                @endphp
-                                                <div class="font-weight-bold @if($percentageChange > 0) text-success @elseif($percentageChange < 0) text-danger @endif">{{sprintf("%+0.2f", $percentageChange)}}%</div>
-                                            </div>
-                                        </div>
-                                        <h5 class="font-weight-bold text-dark mb-2">{{ $perspective->name }}</h5>
-                                        <div class="d-flex align-items-end mb-3">
-                                            <span class="h3 font-weight-bold mb-0" style="color: <?= $perspectives[$key]['border-color'] ?>;">{{ $perspective->score }}</span>
-                                            <span class="ml-2 text-muted small mb-1">/ 100</span>
-                                        </div>
-                                        <div class="progress mb-2" style="height: 8px;">
-                                            <div class="progress-bar" role="progressbar" style="width: <?= $perspective->score ?>%; background-color: <?= $perspectives[$key]['border-color'] ?>;"></div>
-                                        </div>
-                                        @if($perspective->score == 100)
-                                        <p class="text-success small font-weight-medium">Excellent Performance</p>
-                                        @elseif($perspective->score >= 80)
-                                        <p class="text-success small font-weight-medium">Good Performance</p>
-                                        @elseif($perspective->score >= 60)
-                                        <p class="text-warning small font-weight-medium">Needs Improvement</p>
-                                        @else
-                                        <p class="text-warning small font-weight-medium">Needs Attention</p>
-                                        @endif
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-
-                            <div class="col-12 col-md-6 col-lg-3 mb-4 d-none">
-                                <div class="card border-left-primary shadow p-3" style="background: linear-gradient(to bottom right, #eff6ff, #dbeafe); border-left: 4px solid #3b82f6; border-radius: 1rem;">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <div class="bg-primary p-3 rounded-circle text-white">
-                                            <i class="fas fa-users fa-lg"></i>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-muted small">Target: 75</div>
-                                            <div class="font-weight-bold text-danger">-4.0%</div>
-                                        </div>
-                                    </div>
-                                    <h5 class="font-weight-bold text-dark mb-2">Perspektif Pelanggan</h5>
-                                    <div class="d-flex align-items-end mb-3">
-                                        <span class="h3 font-weight-bold text-primary mb-0">72</span>
-                                        <span class="ml-2 text-muted small mb-1">/ 100</span>
-                                    </div>
-                                    <div class="progress mb-2" style="height: 8px;">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%"></div>
-                                    </div>
-                                    <p class="text-warning small font-weight-medium">Needs Improvement</p>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-3 mb-4 d-none">
-                                <div class="card border-left-purple shadow p-3" style="background: linear-gradient(to bottom right, #f5f3ff, #ede9fe); border-left: 4px solid #a855f7; border-radius: 1rem;">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <div class="p-3 rounded-circle text-white" style="background-color: #a855f7;">
-                                            <i class="fas fa-cogs fa-lg"></i>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-muted small">Target: 85</div>
-                                            <div class="font-weight-bold text-danger">-8.2%</div>
-                                        </div>
-                                    </div>
-                                    <h5 class="font-weight-bold text-dark mb-2">Proses Internal</h5>
-                                    <div class="d-flex align-items-end mb-3">
-                                        <span class="h3 font-weight-bold text-purple mb-0" style="color: #a855f7;">78</span>
-                                        <span class="ml-2 text-muted small mb-1">/ 100</span>
-                                    </div>
-                                    <div class="progress mb-2" style="height: 8px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 78%; background-color: #a855f7;"></div>
-                                    </div>
-                                    <p class="text-success small font-weight-medium">Good Performance</p>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-3 mb-4 d-none">
-                                <div class="card border-left-warning shadow p-3" style="background: linear-gradient(to bottom right, #fff7ed, #ffedd5); border-left: 4px solid #f97316; border-radius: 1rem;">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <div class="p-3 rounded-circle text-white" style="background-color: #f97316;">
-                                            <i class="fas fa-graduation-cap fa-lg"></i>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="text-muted small">Target: 70</div>
-                                            <div class="font-weight-bold text-danger">-2.9%</div>
-                                        </div>
-                                    </div>
-                                    <h5 class="font-weight-bold text-dark mb-2">Pembelajaran &amp; Pertumbuhan</h5>
-                                    <div class="d-flex align-items-end mb-3">
-                                        <span class="h3 font-weight-bold text-warning mb-0" style="color: #f97316;">68</span>
-                                        <span class="ml-2 text-muted small mb-1">/ 100</span>
-                                    </div>
-                                    <div class="progress mb-2" style="height: 8px;">
-                                        <div class="progress-bar" role="progressbar" style="width: 68%; background-color: #f97316;"></div>
-                                    </div>
-                                    <p class="text-warning small font-weight-medium">Needs Attention</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <canvas id="myChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -543,64 +481,5 @@
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
-
-<script>
-    $(document).ready(function() {
-        const ctx = document.getElementById('myChart');
-        let target = []
-        let labels = []
-        let currentScore = []
-        <?php foreach ($perfectiveBsc as $key => $perspective): ?>
-            labels.push('<?= $perspective->name ?>')
-            target.push(<?= $perspective->target ?>)
-            currentScore.push(<?= $perspective->score ?>)
-        <?php endforeach ?>
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'Target',
-                data: target,
-                fill: true,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgb(255, 99, 132)',
-                pointBackgroundColor: 'rgb(255, 99, 132)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(255, 99, 132)'
-            }, {
-                label: 'Current Score',
-                data: currentScore,
-                fill: true,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointBackgroundColor: 'rgb(54, 162, 235)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(54, 162, 235)'
-            }]
-        };
-        const config = {
-            type: 'radar',
-            data: data,
-            options: {
-                elements: {
-                    line: {
-                        borderWidth: 3
-                    }
-                },
-                scales: {
-                    r: {
-                        angleLines: {
-                            display: false
-                        },
-                        suggestedMin: 10,
-                        suggestedMax: 100
-                    }
-                }
-            },
-        };
-        const chart = new Chart(ctx, config);
-    })
-</script>
 
 </html>
