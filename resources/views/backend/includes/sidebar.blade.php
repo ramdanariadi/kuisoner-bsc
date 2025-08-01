@@ -123,6 +123,15 @@ $notifications_latest = optional($notifications)->take(5);
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
 
+        @php
+            $module_name = "schools";
+            $text = __('Schools');
+            $icon = "fa-solid fa-school";
+            $permission = "view_".$module_name;
+            $url = route('backend.'.$module_name.'.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
         @can('view_logs')
             <li class="nav-group" aria-expanded="true">
                 <a class="nav-link nav-group-toggle" href="#">
