@@ -2,6 +2,7 @@
 
 namespace Modules\School\database\seeders;
 
+use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Modules\School\Models\School;
@@ -15,22 +16,40 @@ class SchoolDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Disable foreign key checks!
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        /*
-         * Schools Seed
-         * ------------------
-         */
-
-        // DB::table('schools')->truncate();
-        // echo "Truncate: schools \n";
-
-        School::factory()->count(20)->create();
-        $rows = School::all();
-        echo " Insert: schools \n\n";
-
-        // Enable foreign key checks!
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        DB::table('schools')->insert([
+            'name'          => 'SMAN 1 SELONG',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+        DB::table('schools')->insert([
+            'name'          => 'SMAN 2 SELONG',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+        DB::table('schools')->insert([
+            'name'          => 'SMAN 1 LABUHAN HAJI',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+        DB::table('schools')->insert([
+            'name'          => 'SMAN 1 SAKRA',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+        DB::table('schools')->insert([
+            'name'          => 'SMAN 1 LENEK',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+        DB::table('schools')->insert([
+            'name'          => 'SMAN 1 MONTONG GADING',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+        DB::table('schools')->insert([
+            'name'          => 'SMAN 1 SUKAMULIA',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
     }
 }
