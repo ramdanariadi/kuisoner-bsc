@@ -176,140 +176,142 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="card shadow">
-    <div class="card-body">
-        <h2 class="h4 font-weight-bold text-dark mb-4">Sistem Penilaian BSC</h2>
+                <div class="card-body">
+                    <h2 class="h4 font-weight-bold text-dark mb-4">Sistem Penilaian BSC</h2>
 
-        <!-- Scoring Overview -->
-        <div class="row mb-4">
-            <div class="col-lg-6 mb-3">
-                <h5 class="font-weight-bold text-dark mb-3">Bobot Perspektif</h5>
-                <div class="mb-2 p-3 bg-success bg-opacity-10 rounded">
-                    <div class="d-flex justify-content-between">
-                        <span class="text-white">Keuangan</span>
-                        <span class="font-weight-bold text-white">25%</span>
+                    <!-- Scoring Overview -->
+                    <div class="row mb-4">
+                        <div class="col-lg-6 mb-3">
+                            <h5 class="font-weight-bold text-dark mb-3">Bobot Perspektif</h5>
+                            <div class="mb-2 p-3 bg-success bg-opacity-10 rounded">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-white">Keuangan</span>
+                                    <span class="font-weight-bold text-white">25%</span>
+                                </div>
+                            </div>
+                            <div class="mb-2 p-3 bg-primary bg-opacity-10 rounded">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-white">Pelanggan</span>
+                                    <span class="font-weight-bold text-white">30%</span>
+                                </div>
+                            </div>
+                            <div class="mb-2 p-3 bg-purple bg-opacity-10 rounded">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-white">Proses Internal</span>
+                                    <span class="font-weight-bold text-white">25%</span>
+                                </div>
+                            </div>
+                            <div class="mb-2 p-3 bg-warning bg-opacity-10 rounded">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-white">Pembelajaran &amp; Pertumbuhan</span>
+                                    <span class="font-weight-bold text-white">20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h5 class="font-weight-bold text-dark mb-3">Skala Penilaian</h5>
+                            <div class="mb-2 d-flex align-items-center bg-success bg-opacity-25 rounded p-2">
+                                <div class="badge badge-light rounded-circle p-2 mr-3">5</div>
+                                <span class="text-white">Sangat Baik (81-100)</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center bg-primary bg-opacity-25 rounded p-2">
+                                <div class="badge badge-light rounded-circle p-2 mr-3">4</div>
+                                <span class="text-white">Baik (61-80)</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center bg-warning bg-opacity-25 rounded p-2">
+                                <div class="badge badge-light rounded-circle p-2 mr-3">3</div>
+                                <span class="text-white">Cukup (41-60)</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center bg-orange bg-opacity-25 rounded p-2">
+                                <div class="badge badge-light rounded-circle p-2 mr-3">2</div>
+                                <span class="text-white">Kurang (21-40)</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center bg-danger bg-opacity-25 rounded p-2">
+                                <div class="badge badge-light rounded-circle p-2 mr-3">1</div>
+                                <span class="text-white">Sangat Kurang (0-20)</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-2 p-3 bg-primary bg-opacity-10 rounded">
-                    <div class="d-flex justify-content-between">
-                        <span class="text-white">Pelanggan</span>
-                        <span class="font-weight-bold text-white">30%</span>
+
+                    <!-- Current Scores -->
+                    <h5 class="font-weight-bold text-dark mb-3">Skor Saat Ini</h5>
+                    <div class="row mb-4">
+                        @php
+                        $perspectives = [
+                        ['color' => 'success'],
+                        ['color' => 'primary'],
+                        ['color' => 'purple'],
+                        ['color' => 'warning']
+                        ];
+                        @endphp
+                        @foreach ($reports as $key => $report)
+                        <div class="col-md-6 col-lg-3 mb-3">
+                            <div class="card bg-{{ $perspectives[$key]['color'] }} bg-opacity-10 text-center p-3">
+                                <h3 class="text-white font-weight-bold">{{ $report->score }}</h3>
+                                <div class="text-white">{{ $report->perspective_name }}</div>
+                                <small class="text-white">{{ $report->total_respondent }} Responden</small>
+                            </div>
+                        </div>
+                        @endforeach
+                        <div class="col-md-6 col-lg-3 mb-3 d-none">
+                            <div class="card bg-primary bg-opacity-10 text-center p-3">
+                                <h3 class="text-white font-weight-bold">72</h3>
+                                <div class="text-white">Pelanggan</div>
+                                <small class="text-white">Baik</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3 d-none">
+                            <div class="card bg-purple bg-opacity-10 text-center p-3">
+                                <h3 class="text-white font-weight-bold">78</h3>
+                                <div class="text-white">Proses Internal</div>
+                                <small class="text-white">Baik</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3 d-none">
+                            <div class="card bg-warning bg-opacity-10 text-center p-3">
+                                <h3 class="text-white font-weight-bold">68</h3>
+                                <div class="text-white">Pembelajaran</div>
+                                <small class="text-white">Baik</small>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-2 p-3 bg-purple bg-opacity-10 rounded">
-                    <div class="d-flex justify-content-between">
-                        <span class="text-white">Proses Internal</span>
-                        <span class="font-weight-bold text-white">25%</span>
-                    </div>
-                </div>
-                <div class="mb-2 p-3 bg-warning bg-opacity-10 rounded">
-                    <div class="d-flex justify-content-between">
-                        <span class="text-white">Pembelajaran &amp; Pertumbuhan</span>
-                        <span class="font-weight-bold text-white">20%</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <h5 class="font-weight-bold text-dark mb-3">Skala Penilaian</h5>
-                <div class="mb-2 d-flex align-items-center bg-success bg-opacity-25 rounded p-2">
-                    <div class="badge badge-light rounded-circle p-2 mr-3">5</div>
-                    <span class="text-white">Sangat Baik (81-100)</span>
-                </div>
-                <div class="mb-2 d-flex align-items-center bg-primary bg-opacity-25 rounded p-2">
-                    <div class="badge badge-light rounded-circle p-2 mr-3">4</div>
-                    <span class="text-white">Baik (61-80)</span>
-                </div>
-                <div class="mb-2 d-flex align-items-center bg-warning bg-opacity-25 rounded p-2">
-                    <div class="badge badge-light rounded-circle p-2 mr-3">3</div>
-                    <span class="text-white">Cukup (41-60)</span>
-                </div>
-                <div class="mb-2 d-flex align-items-center bg-orange bg-opacity-25 rounded p-2">
-                    <div class="badge badge-light rounded-circle p-2 mr-3">2</div>
-                    <span class="text-white">Kurang (21-40)</span>
-                </div>
-                <div class="mb-2 d-flex align-items-center bg-danger bg-opacity-25 rounded p-2">
-                    <div class="badge badge-light rounded-circle p-2 mr-3">1</div>
-                    <span class="text-white">Sangat Kurang (0-20)</span>
-                </div>
-            </div>
-        </div>
 
-        <!-- Current Scores -->
-        <h5 class="font-weight-bold text-dark mb-3">Skor Saat Ini</h5>
-        <div class="row mb-4">
-            <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card bg-success bg-opacity-10 text-center p-3">
-                    <h3 class="text-white font-weight-bold">85</h3>
-                    <div class="text-white">Keuangan</div>
-                    <small class="text-white">Sangat Baik</small>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card bg-primary bg-opacity-10 text-center p-3">
-                    <h3 class="text-white font-weight-bold">72</h3>
-                    <div class="text-white">Pelanggan</div>
-                    <small class="text-white">Baik</small>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card bg-purple bg-opacity-10 text-center p-3">
-                    <h3 class="text-white font-weight-bold">78</h3>
-                    <div class="text-white">Proses Internal</div>
-                    <small class="text-white">Baik</small>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 mb-3">
-                <div class="card bg-warning bg-opacity-10 text-center p-3">
-                    <h3 class="text-white font-weight-bold">68</h3>
-                    <div class="text-white">Pembelajaran</div>
-                    <small class="text-white">Baik</small>
-                </div>
-            </div>
-        </div>
+                    <!-- Score Calculation -->
+                    <div class="card bg-light p-4">
+                        <h5 class="font-weight-bold text-dark mb-3">Perhitungan Skor Total</h5>
+                        <?php
 
-        <!-- Score Calculation -->
-        <div class="card bg-light p-4">
-            <h5 class="font-weight-bold text-dark mb-3">Perhitungan Skor Total</h5>
-            <?php 
+                        // [
+                        //     {
+                        //         respondent: "Siswa",
+                        //         perspective: "PERSPEKTIF KEUANGAN",
+                        //         perspective_id: 1,
+                        //         total_answers: 5,
+                        //         average_value: "3.0000"
+                        //     }
+                        // ]
 
-                // [
-                //     {
-                //         respondent: "Siswa",
-                //         perspective: "PERSPEKTIF KEUANGAN",
-                //         perspective_id: 1,
-                //         total_answers: 5,
-                //         average_value: "3.0000"
-                //     }
-                // ]
-
-                $totalScore = 0;
-                foreach ($reports as $report) {
-                    $weights = [
-                        0,
-                        25,
-                        30,
-                        25,
-                        20
-                    ];
-                    $score = $report->total_answers;
-                    $weight = $weights[$report->perspective_id] ?? 0;
-                    $weightedScore = $score * ($weight / 100);
-                    $totalScore += $weightedScore;
-                    echo "<div class='mb-2 d-flex justify-content-between'>
-                            <span>{$report->perspective} ({$score} × {$weight}%)</span>
-                            <span class='font-weight-bold'>{$weightedScore}</span>
+                        $totalScore = 0;
+                        foreach ($reports as $report) {
+                            $score = $report->score * $report->weight_value;
+                            $totalScore += $score;
+                            $percentage = $report->weight_value * 100;
+                            echo "<div class='mb-2 d-flex justify-content-between'>
+                            <span>$report->perspective_name ($report->score x $percentage%)</span>
+                            <span class='font-weight-bold'>{$score}</span>
                           </div>";
-                }
+                        }
 
-                echo "<hr>
+                        echo "<hr>
                       <div class='d-flex justify-content-between text-success font-weight-bold'>
                           <span>Total Skor BSC</span>
                           <span>{$totalScore}</span>
                       </div>";
 
-            ?>
-        </div>
-    </div>
-</div>
+                        ?>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.content-wrapper -->
 

@@ -219,21 +219,27 @@ class QuestionnaireController extends Controller
 
     public function report()
     {
-        $data = DB::table('statements as s')
-            ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
-            ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
-            ->join('questionnaires as q', 's.questionnaire_id', '=', 'q.id')
-            ->leftJoin('user_answers as ua', 'ua.statement_id', '=', 's.id')
-            ->select([
-                'rt.name as respondent',
-                'qt.name as perspective',
-                'qt.id as perspective_id',
-                DB::raw('COUNT(ua.value) as total_answers'),
-                DB::raw('AVG(ua.value) as average_value')
-            ])
-            ->groupBy('qt.id', 'rt.name', 'qt.name')
+        // $data = DB::table('statements as s')
+        //     ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
+        //     ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
+        //     ->join('questionnaires as q', 's.questionnaire_id', '=', 'q.id')
+        //     ->leftJoin('user_answers as ua', 'ua.statement_id', '=', 's.id')
+        //     ->select([
+        //         'qt.name as perspective',
+        //         'qt.id as perspective_id',
+        //         DB::raw('COUNT(ua.value) as total_answers'),
+        //         DB::raw('AVG(ua.value) * 20 as score')
+        //     ])
+        //     ->groupBy('qt.id', 'qt.name')
+        //     ->get();
+
+        $schoolScores = DB::table('school_scores as ss')
+            ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
+            ->select('qt.name as perspective_name', 'ss.total as total_respondent', 'qt.weight_value', DB::raw('(ss.score / ss.total / 5 * 20) as score '), 'ss.total')
+            ->orderBy('qt.id')
             ->get();
 
-        return view('frontend.questionnaire.report', ['reports' => $data]);
+        // echo json_encode($schoolScores); exit;
+        return view('frontend.questionnaire.report', ['reports' => $schoolScores]);
     }
 }
