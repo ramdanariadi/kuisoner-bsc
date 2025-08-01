@@ -29,5 +29,23 @@ class RespondentTypeDatabaseSeeder extends Seeder
             'created_at'    => new DateTime('now'),
             'updated_at'    => new DateTime('now'),
         ]);
+
+        DB::table('respondenttypes')->insert([
+            'name'          => 'Guru',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+
+        DB::table('respondenttypes')->insert([
+            'name'          => 'Orang Tua',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+
+        DB::table('respondenttypes')->insert([
+            'name'          => 'Kepala Sekolah',
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
     }
 }
