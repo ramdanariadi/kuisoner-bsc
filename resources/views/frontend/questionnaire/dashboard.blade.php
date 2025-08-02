@@ -133,6 +133,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('frontend.questionnaire.penilaian')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.penilaian')) active @endif">
+                                <i class="fa fa-list"></i>
+                                <p>Penilaian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('frontend.questionnaire.report')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.report')) active @endif">
                                 <i class="fa fa-chart-bar"></i>
                                 <p>Report</p>

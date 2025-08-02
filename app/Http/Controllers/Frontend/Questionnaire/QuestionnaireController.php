@@ -219,6 +219,57 @@ class QuestionnaireController extends Controller
 
     public function report()
     {
+        
+        $schoolScores = DB::table('schools as s')
+            ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
+            ->select('s.id', 's.name', DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'))
+            ->groupBy('s.id')
+            ->orderBy('score', 'desc')
+            ->get();
+
+        $schoolAvg = DB::table('schools as s')
+            ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
+            ->select(DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'))
+            ->groupBy('s.id')
+            ->get()
+            ->filter(fn($item) => $item->score > 0)
+            ->avg('score');
+
+        $yourSchoolScores = null;
+        if(auth()->check() && auth()->user()->school_id) {
+            $yourSchoolScores = $schoolScores->firstWhere('id', auth()->user()->school_id);
+            if($yourSchoolScores) {
+                $yourSchoolScores->position = $schoolScores->search(function ($item) use ($yourSchoolScores) {
+                    return $item->id === $yourSchoolScores->id;
+                }) + 1; // +1 for 1-based index
+                $yourSchoolScores->score_gap_with_first_school = $schoolScores->first()->score - $yourSchoolScores->score;
+                $yourSchoolScores->score_gap_with_avg = $schoolAvg - $yourSchoolScores->score * ($yourSchoolScores->score > $schoolAvg ? -1 : 1);
+
+            }
+        }
+
+        $perfectiveBsc = DB::table('schools as s')
+            ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
+            ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
+            ->select('qt.name','qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
+            ->where('ss.score','>','0')
+            ->groupBy('ss.questionnaire_type_id')
+            ->orderBy('qt.id')
+            ->get();
+
+        $data = [
+            'schoolScores' => $schoolScores,
+            'schoolAvg' => $schoolAvg,
+            'yourSchoolScores' => $yourSchoolScores,
+            'perfectiveBsc' => $perfectiveBsc,
+        ];
+
+        // echo json_encode($data); exit;
+        return view('frontend.questionnaire.report', $data);
+    }
+
+    public function penilaian()
+    {
         // $data = DB::table('statements as s')
         //     ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
         //     ->join('respondenttypes as rt', 's.respondent_type_id', '=', 'rt.id')
@@ -240,6 +291,6 @@ class QuestionnaireController extends Controller
             ->get();
 
         // echo json_encode($schoolScores); exit;
-        return view('frontend.questionnaire.report', ['reports' => $schoolScores]);
+        return view('frontend.questionnaire.penilaian', ['reports' => $schoolScores]);
     }
 }
