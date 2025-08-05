@@ -58,5 +58,21 @@ class QuestionnairetypeDatabaseSeeder extends Seeder
             'created_at'    => new DateTime('now'),
             'updated_at'    => new DateTime('now'),
         ]);
+
+        DB::table('questionnairetypes')->insert([
+            'name'          => 'Skala Usability: System Usability Scale (SUS)',
+            'weight_value'  => 1,
+            'target'        => 100,
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
+
+        DB::table('questionnairetypes')->insert([
+            'name'          => 'Sub-skala Efektivitas Penggunaan Aplikasi',
+            'weight_value'  => 1,
+            'target'        => 100,
+            'created_at'    => new DateTime('now'),
+            'updated_at'    => new DateTime('now'),
+        ]);
     }
 }

@@ -37,7 +37,7 @@ class RespondentTypeDatabaseSeeder extends Seeder
         ]);
 
         DB::table('respondenttypes')->insert([
-            'name'          => 'Orang Tua',
+            'name'          => 'Orang Tua / Wali',
             'created_at'    => new DateTime('now'),
             'updated_at'    => new DateTime('now'),
         ]);
