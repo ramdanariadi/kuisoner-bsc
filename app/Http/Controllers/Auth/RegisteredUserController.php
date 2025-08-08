@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -20,7 +21,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $schools = School::all()->pluck('name', 'id')->toArray();
+        $respondent_types = DB::table('respondenttypes')
+        // ->whereIn('id',[1,3])
+        ->pluck('name', 'id')->toArray();
+        return view('auth.register', compact('schools', 'respondent_types'));
     }
 
     /**
@@ -34,6 +39,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'school_id' => ['required', 'exists:schools,id'],
+            'respondent_type_id' => ['required', 'exists:respondenttypes,id'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -41,6 +47,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'school_id' => $request->school_id,
+            'respondent_type_id' => $request->respondent_type_id,
             'email_verified_at' => now(),
             'is_active' => true,
             'password' => Hash::make($request->password),

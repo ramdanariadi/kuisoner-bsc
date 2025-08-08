@@ -78,13 +78,28 @@
                             $field_name = 'school_id';
                             $field_lable = 'School';
                             $field_options = !empty($data) ? optional($data->school())->pluck('name', 'id') : '';
-                            $selected = !empty($data) ? optional($data->school())->pluck('id')->toArray() : '';
+                            $selected = [1];
                             $field_placeholder = __('Select an option');
                             $required = 'required';
                             ?>
                             {{ html()->label($field_lable, $field_name)->class('form-label')->for($field_name) }}
                             {!! field_required($required) !!}
                             {{ html()->select($field_name, $field_options, $selected)->placeholder($field_placeholder)->class('form-select select2-school')->attributes(["$required"]) }}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4 mb-3">
+                        <div class="form-group">
+                            <?php
+                            $field_name = 'respondent_type_id';
+                            $field_lable = 'Sebagai';
+                            $field_options = $respondent_types ?? [];
+                            $selected = $user->respondent_type_id;
+                            $field_placeholder = __('Select an option');
+                            $required = 'required';
+                            ?>
+                            {{ html()->label($field_lable, $field_name)->class('form-label')->for($field_name) }}
+                            {!! field_required($required) !!}
+                            {{ html()->select($field_name, $field_options, $selected)->placeholder($field_placeholder)->class('form-select select2')->attributes(["$required"]) }}
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 mb-3">
@@ -121,6 +136,7 @@
                             $field_lable = __(label_case($field_name));
                             $field_placeholder = '-- Select an option --';
                             $required = '';
+                            $selected = $user->gender;
                             $select_options = [
                                 'Female' => 'Female',
                                 'Male' => 'Male',
@@ -128,7 +144,7 @@
                             ];
                             ?>
                             {{ html()->label($field_lable, $field_name)->class('form-label') }} {!! field_required($required) !!}
-                            {{ html()->select($field_name, $select_options)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
+                            {{ html()->select($field_name, $select_options, $selected)->placeholder($field_placeholder)->class('form-select')->attributes(["$required"]) }}
                         </div>
                     </div>
 
@@ -390,6 +406,12 @@
                     $(document).on('select2:open', () => {
                         document.querySelector('.select2-search__field').focus();
                         document.querySelector('.select2-container--open .select2-search__field').focus();
+                    });
+
+                    $('.select2').select2({
+                        width: '100%',
+                        theme: 'bootstrap-5',
+                        placeholder: '@lang('Select an option')',
                     });
 
                     $('.select2-school').select2({

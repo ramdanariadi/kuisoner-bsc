@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -193,12 +194,15 @@ class UserController extends Controller
 
         $roles = Role::get();
         $permissions = Permission::select('name', 'id')->orderBy('id')->get();
+        $respondent_types = DB::table('respondenttypes')
+            ->pluck('name', 'id')
+            ->toArray();
 
         logUserAccess($module_title.' '.$module_action);
 
         return view(
             "{$module_path}.{$module_name}.create",
-            compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_action', 'module_name_singular', 'roles', 'permissions')
+            compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_action', 'module_name_singular', 'roles', 'permissions', 'respondent_types')
         );
     }
 
@@ -222,6 +226,7 @@ class UserController extends Controller
             'first_name' => 'required|min:3|max:191',
             'last_name' => 'required|min:3|max:191',
             'school_id' => 'required',
+            'respondent_type_id' => 'required',
             'email' => 'required|email:rfc,dns|regex:/(.+)@(.+)\.(.+)/i|max:191|unique:users',
             'password' => 'required|confirmed|min:6',
             'roles' => 'nullable|array',
@@ -410,12 +415,15 @@ class UserController extends Controller
 
         $roles = Role::get();
         $permissions = Permission::select('name', 'id')->orderBy('id')->get();
+        $respondent_types = DB::table('respondenttypes')
+            ->pluck('name', 'id')
+            ->toArray();
 
         logUserAccess("{$module_title} {$module_action} {$$module_name_singular->name} ($id)");
-
+        // echo json_encode(compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_action', 'module_name_singular', "{$module_name_singular}", 'roles', 'permissions', 'userRoles', 'userPermissions', 'respondent_types')); exit;
         return view(
             "{$module_path}.{$module_name}.edit",
-            compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_action', 'module_name_singular', "{$module_name_singular}", 'roles', 'permissions', 'userRoles', 'userPermissions')
+            compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_action', 'module_name_singular', "{$module_name_singular}", 'roles', 'permissions', 'userRoles', 'userPermissions', 'respondent_types')
         );
     }
 
@@ -447,6 +455,7 @@ class UserController extends Controller
             'first_name' => 'required|min:3|max:191',
             'last_name' => 'required|min:3|max:191',
             'school_id' => 'required',
+            'respondent_type_id' => 'required',
             'email' => 'required|email:rfc,dns|regex:/(.+)@(.+)\.(.+)/i|max:191|unique:users,email,'.$id,
             'roles' => 'nullable|array',
             'permissions' => 'nullable|array',

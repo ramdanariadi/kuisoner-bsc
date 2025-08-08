@@ -23,13 +23,26 @@
                 <?php
                 $field_name = 'school_id';
                 $field_lable = 'School';
-                $field_options = !empty($data) ? optional($data->school())->pluck('name', 'id') : '';
-                $selected = !empty($data) ? optional($data->school())->pluck('id')->toArray() : '';
+                $field_options = $schools ?? [];
                 $field_placeholder = __('Select an option');
                 $required = 'required';
                 ?>
                 <x-input-label for="school_id" :value="__('School')" />
-                {{ html()->select($field_name, $field_options, $selected)->placeholder($field_placeholder)->class('form-select select2-school w-100')->attributes(["$required"]) }}
+                {{ html()->select($field_name, $field_options)->placeholder($field_placeholder)->class('form-select select2 select2-school w-100')->attributes(["$required"]) }}
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="form-group" style="width: 100%;">
+                <?php
+                $field_name = 'respondent_type_id';
+                $field_lable = 'Sebagai';
+                $field_options = $respondent_types ?? [];
+                $field_placeholder = __('Select an option');
+                $required = 'required';
+                ?>
+                <x-input-label for="respondent_type_id" :value="__('Sebagai')" />
+                {{ html()->select($field_name, $field_options)->placeholder($field_placeholder)->class('form-select select2 select2-respondent-type w-100')->attributes(["$required"]) }}
             </div>
         </div>
 
@@ -76,28 +89,34 @@
                 document.querySelector('.select2-container--open .select2-search__field').focus();
             });
 
-            $('.select2-school').select2({
+            $('.select2').select2({
                 width: '100%',
                 theme: 'bootstrap-5',
-                placeholder: '@lang('Select an option')',
-                minimumInputLength: 2,
-                allowClear: true,
-                ajax: {
-                    url: '{{ route('frontend.schools.index_list') }}',
-                    dataType: 'json',
-                    data: function(params) {
-                        return {
-                            q: $.trim(params.term)
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: true
-                }
-            });
+                placeholder: '@lang('Select an option')',    
+            })
+
+            // $('.select2-school').select2({
+            //     width: '100%',
+            //     theme: 'bootstrap-5',
+            //     placeholder: '@lang('Select an option')',
+            //     minimumInputLength: 2,
+            //     allowClear: true,
+            //     ajax: {
+            //         url: '{{ route('frontend.schools.index_list') }}',
+            //         dataType: 'json',
+            //         data: function(params) {
+            //             return {
+            //                 q: $.trim(params.term)
+            //             };
+            //         },
+            //         processResults: function(data) {
+            //             return {
+            //                 results: data
+            //             };
+            //         },
+            //         cache: true
+            //     }
+            // });
         });
     </script>
 </x-guest-layout>

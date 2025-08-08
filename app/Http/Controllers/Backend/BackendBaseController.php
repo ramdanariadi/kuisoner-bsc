@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 
@@ -251,7 +252,7 @@ class BackendBaseController extends Controller
         $$module_name_singular = $module_model::findOrFail($id);
 
         logUserAccess($module_title.' '.$module_action.' | Id: '.$$module_name_singular->id);
-
+        Log::info('cek',compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_action', 'module_name_singular', "{$module_name_singular}"));
         return view(
             "{$module_path}.{$module_name}.edit",
             compact('module_title', 'module_name', 'module_path', 'module_icon', 'module_action', 'module_name_singular', "{$module_name_singular}")
