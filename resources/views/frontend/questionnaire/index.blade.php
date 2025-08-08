@@ -232,6 +232,11 @@
                         </ol>
                     </div>
                     <div class="row">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kuisionerModal">
+                            Isi Kuisioner
+                        </button>
+                    </div>
+                    <div class="row">
                         <form action="#" method="post">
                             <table class="table">
                                 <tbody>
@@ -296,6 +301,75 @@
         </div>
         <!-- /.content-wrapper -->
 
+        <!-- Modal -->
+        <div class="modal fade" id="kuisionerModal" tabindex="-1" role="dialog" aria-labelledby="kuisionerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="kuisionerModalLabel">Kuisioner Efektivitas Aplikasi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="form-kuisioner">
+                            <!-- Bagian A. SUS -->
+                            <h3 class="mt-4 mb-2">A. System Usability Scale (SUS)</h3>
+
+                            <?php foreach ($applicationPerformanceQuestionnaire as $key => $questionnaire): if($questionnaire->questionnaire_type_id != 5) break; ?>
+
+                                <div class="form-group">
+                                    <label><?= $key + 1 ?>. <?= $questionnaire->statement ?></label>
+                                    <div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 1 ? 'checked' : '' ?> value="1"> <label class="form-check-label">Sangat Tidak Setuju</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 2 ? 'checked' : '' ?> value="2"> <label class="form-check-label">Tidak Setuju</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 3 ? 'checked' : '' ?> value="3"> <label class="form-check-label">Netral</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 4 ? 'checked' : '' ?> value="4"> <label class="form-check-label">Setuju</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 5 ? 'checked' : '' ?> value="5"> <label class="form-check-label">Sangat Setuju</label></div>
+                                    </div>
+                                </div>
+
+                            <?php endforeach ?>
+
+                            <!-- Tambahkan sus_3 sampai sus_10 dengan pola yang sama -->
+
+                            <!-- Bagian B. Efektivitas -->
+                            <h3 class="mt-4 mb-2">B. Efektivitas Penggunaan Aplikasi</h3>
+
+                            <?php $no = 1;
+                            foreach ($applicationPerformanceQuestionnaire as $key => $questionnaire): if($questionnaire->questionnaire_type_id != 6) continue; ?>
+                                <div class="form-group">
+                                    <label><?= $no++ ?>. <?= $questionnaire->statement ?></label>
+                                    <div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 1 ? 'checked' : '' ?> value="1"> <label class="form-check-label">Sangat Tidak Setuju</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 2 ? 'checked' : '' ?> value="2"> <label class="form-check-label">Tidak Setuju</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 3 ? 'checked' : '' ?> value="3"> <label class="form-check-label">Netral</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 4 ? 'checked' : '' ?> value="4"> <label class="form-check-label">Setuju</label></div>
+                                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="answers[<?= $questionnaire->questionnaire_id ?>][<?= $questionnaire->perspective_id ?>][<?= $questionnaire->statement_id ?>]" <?= $questionnaire->value == 5 ? 'checked' : '' ?> value="5"> <label class="form-check-label">Sangat Setuju</label></div>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
+
+                            <!-- Tambahkan efektivitas_2 sampai efektivitas_8 -->
+
+                            <!-- Bagian D. Komentar -->
+                            <h6 class="mt-4 mb-2">Komentar dan Saran</h6>
+                            <div class="form-group">
+                                <textarea class="form-control" name="komentar" rows="3" placeholder="Tulis komentar Anda di sini..."></textarea>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-success">Kirim</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
@@ -347,7 +421,7 @@
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('dist/js/demo.js')}}"></script>
+<!-- <script src="{{asset('dist/js/demo.js')}}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
 <script>
@@ -371,11 +445,25 @@
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    Swal.fire({
-                        title: "Good job!",
-                        text: "Data saved successfully!",
-                        icon: "success"
-                    });
+                    $('#kuisionerModal').modal('hide')
+                    if(response.status) {
+                        // If the response indicates success, show a success message
+                        Swal.fire({
+                            title: "Good job!",
+                            text: response.message,
+                            icon: "success"
+                        });
+                        if(!response.count){
+                            $('kuisionerModal').modal('show');
+                        }
+                    } else {
+                        // If the response indicates failure, show an error message
+                        Swal.fire({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error"
+                        });
+                    }
                 },
                 error: function(xhr, status, error) {
                     alert('An error occurred while saving data: ' + error);
