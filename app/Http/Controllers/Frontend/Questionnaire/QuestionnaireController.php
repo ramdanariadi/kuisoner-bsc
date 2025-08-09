@@ -21,7 +21,7 @@ class QuestionnaireController extends Controller
                 $join->on('ua.statement_id', '=', 's.id')
                     ->where('ua.user_id', '=', auth()->id());
             })
-            ->where('rt.respondent_type_id', auth()->user->respondent_type_id)
+            ->where('rt.id', auth()->user()->respondent_type_id)
             ->whereIn('s.questionnaire_type_id', array(1, 2, 3, 4))
             ->select([
                 'q.id as questionnaire_id',

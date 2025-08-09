@@ -452,10 +452,11 @@
                             title: "Good job!",
                             text: response.message,
                             icon: "success"
-                        });
-                        if(!response.count){
-                            $('kuisionerModal').modal('show');
-                        }
+                        }).then((result) => {
+                            if(response.count === 0){
+                                $('#kuisionerModal').modal('show');
+                            }
+                        })
                     } else {
                         // If the response indicates failure, show an error message
                         Swal.fire({
