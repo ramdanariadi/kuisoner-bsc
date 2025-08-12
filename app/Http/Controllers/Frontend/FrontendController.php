@@ -38,23 +38,23 @@ class FrontendController extends Controller
             ->avg('score');
 
         $yourSchoolScores = null;
-        if(auth()->check() && auth()->user()->school_id) {
+        if (auth()->check() && auth()->user()->school_id) {
             $yourSchoolScores = $schoolScores->firstWhere('id', auth()->user()->school_id);
-            if($yourSchoolScores) {
+            if ($yourSchoolScores) {
                 $yourSchoolScores->position = $schoolScores->search(function ($item) use ($yourSchoolScores) {
                     return $item->id === $yourSchoolScores->id;
                 }) + 1; // +1 for 1-based index
                 $yourSchoolScores->score_gap_with_first_school = $schoolScores->first()->score - $yourSchoolScores->score;
                 $yourSchoolScores->score_gap_with_avg = $schoolAvg - $yourSchoolScores->score * ($yourSchoolScores->score > $schoolAvg ? -1 : 1);
-
             }
         }
 
         $perfectiveBsc = DB::table('schools as s')
             ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
-            ->select('qt.name','qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
-            ->where('ss.score','>','0')
+            ->select('qt.name', 'qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
+            ->where('ss.score', '>', '0')
+            ->where('qt.id', 'in', [1, 2, 3, 4])
             ->groupBy('ss.questionnaire_type_id')
             ->orderBy('qt.id')
             ->get();
