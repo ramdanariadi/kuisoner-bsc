@@ -1,1 +1,1 @@
-<img src="{{asset('img/logo-with-text.jpg')}}" style="height: 50px;">
+<img src="{{asset('dist/img/Logo-Tut-Wuri-Handayani-PNG-Warna.png')}}" style="height: 50px;">

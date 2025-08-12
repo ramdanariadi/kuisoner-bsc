@@ -8,7 +8,7 @@ $notifications_latest = optional($notifications)->take(5);
     <div class="sidebar-header border-bottom">
         <div class="sidebar-brand d-sm-flex justify-content-center">
             <a href="/">
-                <img class="sidebar-brand-full" src="{{ asset('img/logo-with-text.jpg') }}" alt="{{ app_name() }}"
+                <img class="sidebar-brand-full" src="{{asset('dist/img/Logo-Tut-Wuri-Handayani-PNG-Warna.png')}}" alt="{{ app_name() }}"
                     height="46">
                 <img class="sidebar-brand-narrow" src="{{ asset('img/logo-square.jpg') }}" alt="{{ app_name() }}"
                     height="46">
