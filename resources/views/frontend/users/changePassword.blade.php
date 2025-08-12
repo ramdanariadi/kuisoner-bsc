@@ -35,11 +35,11 @@
         </form>
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__wobble" src="{{asset('dist/img/tut-wuri-handayani.png')}}" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-dark">
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-success">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -76,7 +76,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-light-success elevation-4">
             <!-- Brand Logo -->
             <!-- <a href="index3.html" class="brand-link"> -->
             <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
@@ -88,7 +88,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+                        <img class="animation__wobble" src="{{asset('dist/img/Logo-Tut-Wuri-Handayani-PNG-Warna.png')}}" alt="AdminLTELogo" height="60" width="60">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">Kuisoner</a>
@@ -113,37 +113,55 @@
                         <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="{{route('frontend.index')}}" class="nav-link active">
+                            <a href="{{route('frontend.index')}}" class="nav-link">
                                 <i class="fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item menu-open">
+                        <li class="nav-item">
+                            <a href="{{route('frontend.questionnaire.index')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.index')) active @endif">
+                                <i class="fa fa-clipboard-list"></i>
+                                <p>Kuisoner</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('frontend.questionnaire.penilaian')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.penilaian')) active @endif">
+                                <i class="fa fa-list"></i>
+                                <p>Penilaian</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('frontend.questionnaire.report')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.report')) active @endif">
+                                <i class="fa fa-chart-bar"></i>
+                                <p>Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item menu-open d-none">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-clipboard-list"></i>
                                 <p>Kuisoner<i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.keuangan')}}" class="nav-link">
+                                    <a href="{{route('frontend.questionnaire.keuangan')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.keuangan')) active @endif">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>KEUANGAN</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.pelanggan')}}" class="nav-link">
+                                    <a href="{{route('frontend.questionnaire.pelanggan')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.pelanggan')) active @endif">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>PELANGGAN</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.internal')}}" class="nav-link">
+                                    <a href="{{route('frontend.questionnaire.internal')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.internal')) active @endif">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>PROSES INTERNAL</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('frontend.questionnaire.pertumbuhan')}}" class="nav-link">
+                                    <a href="{{route('frontend.questionnaire.pertumbuhan')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.pertumbuhan')) active @endif">
                                         <i class="fa fa-arrow-right nav-icon"></i>
                                         <p>PEMBELAJARAN DAN PERTUMBUHAN</p>
                                     </a>
@@ -160,11 +178,11 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <div class="row ml-2 pt-4">
-                <div class="col-md-4 mt-4 mt-md-0">
+                <div class="col-md-6 mt-4 mt-md-0">
                     {{ html()->form('PATCH', route('frontend.users.changePasswordUpdate'))->class('form-horizontal')->open() }}
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <div class="form-row">
+                            <div class="form row">
                                 <div class="form-group col-md-6">
                                     <?php
                                     $field_name = 'password';
@@ -207,7 +225,7 @@
                 </div>
             </div>
 
-            <div class="row ml-2 mt-2">
+            <div class="row ml-2 mt-1">
                 <div class="col-md-4 mb-5 mt-5">
                     <div class="px-3">
                         <h3 class="h6 font-weight-medium text-dark">@lang('Edit Profile')</h3>
@@ -230,7 +248,7 @@
                 </div>
             </div>
 
-            <div class="row ml-2 mt-2">
+            <div class="row ml-2 mt-1">
                 <div class="col-md-4">
                     <div class="px-3">
                         <h3 class="h5 font-weight-semibold text-dark">@lang('Change Password')</h3>
@@ -262,10 +280,10 @@
 
         <!-- Main Footer -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+            <strong>Copyright &copy; 2025 <a href="https://Kuisoner">Kuisoner</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
+                <b>Version</b> 1.0
             </div>
         </footer>
     </div>
@@ -303,7 +321,7 @@
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('dist/js/demo.js')}}"></script>
+<!-- <script src="{{asset('dist/js/demo.js')}}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard3.js')}}"></script>
 
