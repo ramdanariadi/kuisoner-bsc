@@ -343,6 +343,7 @@ class QuestionnaireController extends Controller
         $schoolScores = DB::table('school_scores as ss')
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
             ->select('qt.name as perspective_name', 'ss.total as total_respondent', 'qt.weight_value', DB::raw('(ss.score / ss.total / 5 * 20) as score '), 'ss.total')
+            ->where('qt.id', 'in', [1, 2, 3, 4])
             ->orderBy('qt.id')
             ->get();
 
