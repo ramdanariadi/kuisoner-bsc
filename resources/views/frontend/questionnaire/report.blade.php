@@ -128,18 +128,22 @@
                                 <p>Kuisoner</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        @if(auth()->check() && (auth()->user()->hasRole('administrator') || auth()->user()->hasRole('super admin')))
+                                                <li class="nav-item">
                             <a href="{{route('frontend.questionnaire.penilaian')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.penilaian')) active @endif">
                                 <i class="fa fa-list"></i>
                                 <p>Penilaian</p>
                             </a>
                         </li>
+                        @endif
+                        @if(auth()->check() && auth()->user()->hasRole('super admin'))
                         <li class="nav-item">
                             <a href="{{route('frontend.questionnaire.report')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.report')) active @endif">
                                 <i class="fa fa-chart-bar"></i>
                                 <p>Report</p>
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item menu-open d-none">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-clipboard-list"></i>
@@ -183,7 +187,7 @@
         <div class="content-wrapper">
             <div class="container-fluid">
                 <div class="w-100 d-flex align-items-center justify-content-between mb-2 mt-2">
-                    <h3>Laporan Benchmarking BSC Antar Sekolah</h3>
+                    <h3>Laporan Benchmarking BSC {{auth()->user()->hasRole('super admin') ? 'Antar' : ''}} Sekolah</h3>
                     <button class="btn btn-warning btn-sm text-white" onclick="exportTableToExcel()"><i class="fa fa-file-excel"></i> Export to Excel</button>
                 </div>
 
@@ -202,7 +206,7 @@
                             <tbody>
                                 @foreach ($schoolScores as $key => $scoreScore)
                                 <tr>
-                                    <td>{{ $scoreScore->name }}</td>
+                                    <td><a href="{{route('frontend.questionnaire.report')}}?school_id={{$scoreScore->id}}">{{ $scoreScore->name }}</a></td>
                                     <td>{{ $scoreScore->score }}</td>
                                     <td>{{ $key + 1 }}</td>
                                     <!-- <td></td> -->
@@ -214,7 +218,7 @@
                 </div>
 
                 <div class="card mb-4">
-                    <div class="card-header bg-success text-white">Analisis BSC SMAN 1 Selong</div>
+                    <div class="card-header bg-success text-white">Analisis BSC {{$yourSchoolScores->name}}</div>
                     <div class="card-body">
                         <table class="table table-striped" id="scoreBsc">
                             <thead>

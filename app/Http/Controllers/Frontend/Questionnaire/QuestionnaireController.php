@@ -291,13 +291,19 @@ class QuestionnaireController extends Controller
         ]);
     }
 
-    public function report()
+    public function report(Request $request)
     {
 
         $schoolScores = DB::table('schools as s')
             ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
-            ->select('s.id', 's.name', DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'))
-            ->groupBy('s.id')
+            ->select('s.id', 's.name', DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'));
+
+        if(!auth()->user()->hasRole('super admin')){
+            $schoolScores = $schoolScores->where('s.id', auth()->user()->school_id);
+        }
+            
+
+        $schoolScores = $schoolScores->groupBy('s.id')
             ->orderBy('score', 'desc')
             ->get();
 
@@ -309,9 +315,12 @@ class QuestionnaireController extends Controller
             ->filter(fn($item) => $item->score > 0)
             ->avg('score');
 
+        $school_id = $request->query('school_id');
+        $school_id = $school_id ?? auth()->user()->school_id;
+
         $yourSchoolScores = null;
-        if (auth()->check() && auth()->user()->school_id) {
-            $yourSchoolScores = $schoolScores->firstWhere('id', auth()->user()->school_id);
+        if (auth()->check() && $school_id) {
+            $yourSchoolScores = $schoolScores->firstWhere('id', $school_id);
             if ($yourSchoolScores) {
                 $yourSchoolScores->position = $schoolScores->search(function ($item) use ($yourSchoolScores) {
                     return $item->id === $yourSchoolScores->id;
@@ -326,6 +335,15 @@ class QuestionnaireController extends Controller
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
             ->select('qt.name', 'qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
             ->where('ss.score', '>', '0')
+            ->whereIn('qt.id', [1, 2, 3, 4]);
+        
+        if(!auth()->user()->hasRole('super admin')){
+            $perfectiveBsc = $perfectiveBsc->where('s.id', auth()->user()->school_id);
+        }else if(!empty($school_id)){
+            $perfectiveBsc = $perfectiveBsc->where('s.id', $school_id);
+        }
+
+        $perfectiveBsc = $perfectiveBsc
             ->whereIn('qt.id', [1, 2, 3, 4])
             ->groupBy('ss.questionnaire_type_id')
             ->orderBy('qt.id')

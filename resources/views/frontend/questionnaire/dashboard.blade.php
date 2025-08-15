@@ -132,18 +132,22 @@
                                 <p>Kuisoner</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        @if(auth()->check() && (auth()->user()->hasRole('administrator') || auth()->user()->hasRole('super admin')))
+                                                <li class="nav-item">
                             <a href="{{route('frontend.questionnaire.penilaian')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.penilaian')) active @endif">
                                 <i class="fa fa-list"></i>
                                 <p>Penilaian</p>
                             </a>
                         </li>
+                        @endif
+                        @if(auth()->check() && auth()->user()->hasRole('super admin'))
                         <li class="nav-item">
                             <a href="{{route('frontend.questionnaire.report')}}" class="nav-link @if(request()->routeIs('frontend.questionnaire.report')) active @endif">
                                 <i class="fa fa-chart-bar"></i>
                                 <p>Report</p>
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item menu-open d-none">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-clipboard-list"></i>
