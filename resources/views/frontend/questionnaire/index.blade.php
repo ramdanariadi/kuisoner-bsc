@@ -437,9 +437,9 @@
 
     $(document).ready(function() {
 
-        @if(!$alreadyAttemptQuestionnaireAppPerformance && $alreadyAttemptQuestionnaire)
+        <?php if(!$alreadyAttemptQuestionnaireAppPerformance && $alreadyAttemptQuestionnaire){ ?>
             $('#kuisionerModal').modal('show');
-        @endif
+        <?php } ?>
 
         // Handle form submission
         $('form').on('submit', function(event) {
