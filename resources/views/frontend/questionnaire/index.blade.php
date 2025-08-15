@@ -235,7 +235,7 @@
                             </li>
                         </ol>
                     </div>
-                    <div class="row">
+                    <div class="row d-none">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kuisionerModal">
                             Isi Kuisioner
                         </button>
