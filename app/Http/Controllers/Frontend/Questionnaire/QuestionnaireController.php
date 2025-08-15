@@ -55,13 +55,31 @@ class QuestionnaireController extends Controller
             ])
             ->get();
 
+        $countUserAnswer = DB::table('user_answers')
+            ->whereIn('questionnaire_type_id', [1,2,3,4])
+            ->where('user_id', auth()->id())
+            ->where('year', now()->year)
+            ->where('semester', now()->month > 6 ? 1 : 2)
+            ->where('school_id', auth()->user()->school_id)
+            ->sum('value');
+
+        $countUserAnswer2 = DB::table('user_answers')
+            ->whereIn('questionnaire_type_id', [5, 6])
+            ->where('user_id', auth()->id())
+            ->where('year', now()->year)
+            ->where('semester', now()->month > 6 ? 1 : 2)
+            ->where('school_id', auth()->user()->school_id)
+            ->sum('value');
+
         // echo json_encode([
         //     'questionnaires' => $data, 
         //     'applicationPerformanceQuestionnaire' => $applicationPerformanceQuestionnaire
         // ]); exit;
         return view('frontend.questionnaire.index', [
             'questionnaires' => $data,
-            'applicationPerformanceQuestionnaire' => $applicationPerformanceQuestionnaire
+            'applicationPerformanceQuestionnaire' => $applicationPerformanceQuestionnaire,
+            'alreadyAttemptQuestionnaire' => $countUserAnswer > 0,
+            'alreadyAttemptQuestionnaireAppPerformance' => $countUserAnswer2 > 0
         ]);
     }
 
@@ -259,7 +277,6 @@ class QuestionnaireController extends Controller
         DB::commit();
 
         $count = DB::table('user_answers')
-            ->where('questionnaire_id', $questionnaire_id)
             ->whereIn('questionnaire_type_id', [5, 6])
             ->where('user_id', auth()->id())
             ->where('year', now()->year)
@@ -309,7 +326,7 @@ class QuestionnaireController extends Controller
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
             ->select('qt.name', 'qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
             ->where('ss.score', '>', '0')
-            ->where('qt.id', 'in', [1, 2, 3, 4])
+            ->whereIn('qt.id', [1, 2, 3, 4])
             ->groupBy('ss.questionnaire_type_id')
             ->orderBy('qt.id')
             ->get();
@@ -344,7 +361,7 @@ class QuestionnaireController extends Controller
         $schoolScores = DB::table('school_scores as ss')
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
             ->select('qt.name as perspective_name', 'ss.total as total_respondent', 'qt.weight_value', DB::raw('(ss.score / ss.total / 5 * 20) as score '), 'ss.total')
-            ->where('qt.id', 'in', [1, 2, 3, 4])
+            ->whereIn('qt.id', [1, 2, 3, 4])
             ->orderBy('qt.id')
             ->get();
 

@@ -204,7 +204,7 @@
                                 <tr>
                                     <td>{{ $scoreScore->name }}</td>
                                     <td>{{ $scoreScore->score }}</td>
-                                    <td>#{{ $key }}</td>
+                                    <td>{{ $key + 1 }}</td>
                                     <!-- <td></td> -->
                                 </tr>
                                 @endforeach

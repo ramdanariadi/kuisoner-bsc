@@ -54,7 +54,7 @@ class FrontendController extends Controller
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
             ->select('qt.name', 'qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
             ->where('ss.score', '>', '0')
-            ->where('qt.id', 'in', [1, 2, 3, 4])
+            ->whereIn('qt.id', [1, 2, 3, 4])
             ->groupBy('ss.questionnaire_type_id')
             ->orderBy('qt.id')
             ->get();
