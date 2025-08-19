@@ -25,7 +25,7 @@ class FrontendController extends Controller
         $schoolScores = DB::table('schools as s')
             ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
             ->select('s.id', 's.name', DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'))
-            ->groupBy('s.id')
+            ->groupBy(['s.id', 's.name'])
             ->orderBy('score', 'desc')
             ->get();
 
@@ -55,7 +55,7 @@ class FrontendController extends Controller
             ->select('qt.name', 'qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
             ->where('ss.score', '>', '0')
             ->whereIn('qt.id', [1, 2, 3, 4])
-            ->groupBy('ss.questionnaire_type_id')
+            ->groupBy(['ss.questionnaire_type_id', 'qt.name', 'qt.target'])
             ->orderBy('qt.id')
             ->get();
 
