@@ -48,6 +48,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend', 'as' => 'frontend.
         Route::post('questionnaire/answer', [QuestionnaireController::class, 'answer'])->name('questionnaire.answer');
         Route::get('questionnaire/penilaian', [QuestionnaireController::class, 'penilaian'])->name('questionnaire.penilaian');
         Route::get('questionnaire/report', [QuestionnaireController::class, 'report'])->name('questionnaire.report');
+        Route::get('questionnaire/report-raw', [QuestionnaireController::class, 'rawReport'])->name('questionnaire.rawReport');
 
         /*
         *

@@ -188,7 +188,10 @@
             <div class="container-fluid">
                 <div class="w-100 d-flex align-items-center justify-content-between mb-2 mt-2">
                     <h3>Laporan Benchmarking BSC {{auth()->user()->hasRole('super admin') ? 'Antar' : ''}} Sekolah</h3>
-                    <button class="btn btn-warning btn-sm text-white" onclick="exportTableToExcel()"><i class="fa fa-file-excel"></i> Export to Excel</button>
+                    <div>
+                        <a href="{{route('frontend.questionnaire.rawReport')}}" class="btn btn-warning btn-sm text-white"><i class="fa fa-database"></i> Export to Raw</a>
+                        <button class="btn btn-warning btn-sm text-white" onclick="exportTableToExcel()"><i class="fa fa-file-excel"></i> Export to Excel</button>
+                    </div>
                 </div>
 
                 <div class="card mb-4">

@@ -209,12 +209,12 @@
                         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
                             <h3 class="h5 font-weight-bold text-dark">Benchmarking Skor BSC Antar Sekolah</h3>
                             <div class="d-flex align-items-center">
-                                <span class="text-muted small mr-2">Periode:</span>
+                                <!-- <span class="text-muted small mr-2">Periode:</span>
                                 <select class="form-control form-control-sm">
                                     <option>Q4 2024</option>
                                     <option>Q3 2024</option>
                                     <option>Q2 2024</option>
-                                </select>
+                                </select> -->
                             </div>
                         </div>
 
@@ -272,7 +272,7 @@
                                         <div class="progress mb-1" style="height: 10px;">
                                             <div class="progress-bar {{ $style[$key]['bg'] }}" style="width: <?= $school->score ?>%;"></div>
                                         </div>
-                                        <p class="small text-danger mb-0"><i class="fas fa-arrow-down mr-1"></i>-2.1% dari Q3</p>
+                                        <!-- <p class="small text-danger mb-0"><i class="fas fa-arrow-down mr-1"></i>-2.1% dari Q3</p> -->
                                     </div>
                                 </div>
 
@@ -295,7 +295,7 @@
                                     <div class="progress mb-1" style="height: 10px;">
                                         <div class="progress-bar bg-warning" style="width: 89.2%;"></div>
                                     </div>
-                                    <p class="small text-success mb-0"><i class="fas fa-arrow-up mr-1"></i>+4.3% dari Q3</p>
+                                    <!-- <p class="small text-success mb-0"><i class="fas fa-arrow-up mr-1"></i>+4.3% dari Q3</p> -->
                                 </div>
                             </div>
 
@@ -316,7 +316,7 @@
                                     <div class="progress mb-1" style="height: 10px;">
                                         <div class="progress-bar bg-secondary" style="width: 82.4%;"></div>
                                     </div>
-                                    <p class="small text-success mb-0"><i class="fas fa-arrow-up mr-1"></i>+1.8% dari Q3</p>
+                                    <!-- <p class="small text-success mb-0"><i class="fas fa-arrow-up mr-1"></i>+1.8% dari Q3</p> -->
                                 </div>
                             </div>
 
@@ -337,7 +337,7 @@
                                     <div class="progress mb-1" style="height: 10px;">
                                         <div class="progress-bar bg-success" style="width: <?= $schoolAvg ?>%;"></div>
                                     </div>
-                                    <p class="small text-success mb-0"><i class="fas fa-arrow-up mr-1"></i>+0.9% dari Q3</p>
+                                    <!-- <p class="small text-success mb-0"><i class="fas fa-arrow-up mr-1"></i>+0.9% dari Q3</p> -->
                                 </div>
                             </div>
 
@@ -360,7 +360,7 @@
                                                 <div class="col-md-6 mb-2 d-none">
                                                     <p><strong>Kekuatan:</strong> Perspektif Keuangan (85 - Rank #2)</p>
                                                     <p><strong>Area Perbaikan:</strong> Perspektif Pelanggan (72 - Rank #8)</p>
-                                                    <p><strong>Target Q1 2025:</strong> Naik ke peringkat #2 (target: 82+)</p>
+                                                    <!-- <p><strong>Target Q1 2025:</strong> Naik ke peringkat #2 (target: 82+)</p> -->
                                                 </div>
                                             </div>
                                         </div>
