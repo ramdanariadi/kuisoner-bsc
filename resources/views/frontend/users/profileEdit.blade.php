@@ -26,6 +26,7 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
     <!-- <link rel="stylesheet" href="{{asset('bootstrap-5.0.2-dist\css\bootstrap.min.css')}}"> -->
+    <link rel="icon" type="image/png" href="{{asset('dist/img/Logo-Tut-Wuri-Handayani-PNG-Warna.png')}}">
 </head>
 
 <body>
