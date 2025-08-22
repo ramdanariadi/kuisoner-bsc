@@ -481,7 +481,10 @@ class QuestionnaireController extends Controller
     {
 
         $schoolScores = DB::table('schools as s')
-            ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
+            ->leftJoin('school_scores as ss', function($join){
+                $join->on('s.id', '=', 'ss.school_id')
+                ->whereIn('ss.questionnaire_type_id', [1, 2, 3, 4]);
+            })
             ->select('s.id', 's.name', DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'));
 
         if (!auth()->user()->hasRole('super admin')) {
@@ -493,14 +496,6 @@ class QuestionnaireController extends Controller
             ->orderBy('score', 'desc')
             ->get();
 
-        $schoolAvg = DB::table('schools as s')
-            ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
-            ->select(DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'))
-            ->groupBy('s.id')
-            ->get()
-            ->filter(fn($item) => $item->score > 0)
-            ->avg('score');
-
         $school_id = $request->query('school_id');
         $school_id = $school_id ?? auth()->user()->school_id;
 
@@ -511,15 +506,13 @@ class QuestionnaireController extends Controller
                 $yourSchoolScores->position = $schoolScores->search(function ($item) use ($yourSchoolScores) {
                     return $item->id === $yourSchoolScores->id;
                 }) + 1; // +1 for 1-based index
-                $yourSchoolScores->score_gap_with_first_school = $schoolScores->first()->score - $yourSchoolScores->score;
-                $yourSchoolScores->score_gap_with_avg = $schoolAvg - $yourSchoolScores->score * ($yourSchoolScores->score > $schoolAvg ? -1 : 1);
             }
         }
 
         $perfectiveBsc = DB::table('schools as s')
             ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
-            ->select('qt.name', 'qt.target', DB::raw('COALESCE(AVG(ss.score / ss.total / 5 * 20), 0) as score'))
+            ->select('qt.name', 'qt.target', DB::raw('COALESCE((ss.score / ss.total / 5 * 20), 0) as score'))
             ->where('ss.score', '>', '0')
             ->whereIn('qt.id', [1, 2, 3, 4]);
 
@@ -530,14 +523,13 @@ class QuestionnaireController extends Controller
         }
 
         $perfectiveBsc = $perfectiveBsc
-            ->whereIn('qt.id', [1, 2, 3, 4])
-            ->groupBy(['ss.questionnaire_type_id','qt.name', 'qt.target'])
+            // ->whereIn('qt.id', [1, 2, 3, 4])
+            // ->groupBy(['ss.questionnaire_type_id','qt.name', 'qt.target'])
             ->orderBy('qt.id')
             ->get();
 
         $data = [
             'schoolScores' => $schoolScores,
-            'schoolAvg' => $schoolAvg,
             'yourSchoolScores' => $yourSchoolScores,
             'perfectiveBsc' => $perfectiveBsc,
         ];
