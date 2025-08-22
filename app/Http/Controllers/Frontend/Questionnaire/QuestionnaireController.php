@@ -489,7 +489,7 @@ class QuestionnaireController extends Controller
         }
 
 
-        $schoolScores = $schoolScores->groupBy('s.id')
+        $schoolScores = $schoolScores->groupBy(['s.id','s.name'])
             ->orderBy('score', 'desc')
             ->get();
 
