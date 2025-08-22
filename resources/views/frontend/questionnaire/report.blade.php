@@ -234,7 +234,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $totalSchoolScore = 0;
+                                @endphp
                                 @foreach ($perfectiveBsc as $perfective)
+                                @php
+                                    $totalSchoolScore += $perfective->score;
+                                @endphp
                                 <tr>
                                     <td>{{ $perfective->name }}</td>
                                     <td>{{ $perfective->score }}</td>
@@ -243,6 +249,13 @@
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>{{$totalSchoolScore}}</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
