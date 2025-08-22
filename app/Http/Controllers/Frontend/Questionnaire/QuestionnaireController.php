@@ -531,7 +531,7 @@ class QuestionnaireController extends Controller
 
         $perfectiveBsc = $perfectiveBsc
             ->whereIn('qt.id', [1, 2, 3, 4])
-            ->groupBy('ss.questionnaire_type_id')
+            ->groupBy(['ss.questionnaire_type_id','qt.name', 'qt.target'])
             ->orderBy('qt.id')
             ->get();
 
