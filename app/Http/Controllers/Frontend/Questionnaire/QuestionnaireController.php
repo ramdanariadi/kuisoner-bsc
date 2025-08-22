@@ -297,12 +297,16 @@ class QuestionnaireController extends Controller
 
     public function getRawAnswer(array $questionnaire_type_id)
     {
+        if (!auth()->user()->hasRole('super admin')) {
+            return;
+        }
         $data = DB::table('user_answers as ua')
             ->join('users as u', 'ua.user_id', '=', 'u.id')
             ->leftJoin('statements as s', 'ua.statement_id', '=', 's.id')
             ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
             ->leftJoin('respondenttypes as rt', DB::raw('COALESCE(s.respondent_type_id, u.respondent_type_id)'), '=', 'rt.id')
             ->join('questionnaires as q', 's.questionnaire_id', '=', 'q.id')
+            ->leftJoin('user_suggestion_and_questions as usq', 'usq.user_id', '=', 'u.id')
             ->whereIn('s.questionnaire_type_id', $questionnaire_type_id)
             ->select([
                 'u.id as user_id',
@@ -315,7 +319,8 @@ class QuestionnaireController extends Controller
                 'qt.id as perspective_id',
                 's.id as statement_id',
                 's.statement',
-                'ua.value'
+                'ua.value',
+                'usq.value as komentar'
             ])
             ->orderBy('u.school_id', 'ASC')
             ->orderBy('ua.user_id', 'DESC')
@@ -418,25 +423,26 @@ class QuestionnaireController extends Controller
         $sheet2->setCellValue('A1', 'Nama');
         $sheet2->setCellValue('B1', 'Sekolah');
         $sheet2->setCellValue('C1', 'Tipe Respondent');
-        $sheet2->setCellValue('D1', 'A1');
-        $sheet2->setCellValue('E1', 'A2');
-        $sheet2->setCellValue('F1', 'A3');
-        $sheet2->setCellValue('G1', 'A4');
-        $sheet2->setCellValue('H1', 'A5');
-        $sheet2->setCellValue('I1', 'B6');
-        $sheet2->setCellValue('J1', 'B7');
-        $sheet2->setCellValue('K1', 'B8');
-        $sheet2->setCellValue('L1', 'B9');
-        $sheet2->setCellValue('M1', 'B10');
-        $sheet2->setCellValue('N1', 'C11');
-        $sheet2->setCellValue('O1', 'C12');
-        $sheet2->setCellValue('P1', 'C13');
-        $sheet2->setCellValue('Q1', 'C14');
-        $sheet2->setCellValue('R1', 'C15');
-        $sheet2->setCellValue('S1', 'D16');
-        $sheet2->setCellValue('T1', 'D17');
-        $sheet2->setCellValue('U1', 'D18');
-        $sheet2->getStyle('A1:U1')->applyFromArray($header_style);
+        $sheet2->setCellValue('D1', 'Saran');
+        $sheet2->setCellValue('E1', 'A1');
+        $sheet2->setCellValue('F1', 'A2');
+        $sheet2->setCellValue('G1', 'A3');
+        $sheet2->setCellValue('H1', 'A4');
+        $sheet2->setCellValue('I1', 'B5');
+        $sheet2->setCellValue('J1', 'B6');
+        $sheet2->setCellValue('K1', 'B7');
+        $sheet2->setCellValue('L1', 'B8');
+        $sheet2->setCellValue('M1', 'B9');
+        $sheet2->setCellValue('N1', 'C10');
+        $sheet2->setCellValue('O1', 'C11');
+        $sheet2->setCellValue('P1', 'C12');
+        $sheet2->setCellValue('Q1', 'C13');
+        $sheet2->setCellValue('R1', 'C14');
+        $sheet2->setCellValue('S1', 'D15');
+        $sheet2->setCellValue('T1', 'D16');
+        $sheet2->setCellValue('U1', 'D17');
+        $sheet2->setCellValue('V1', 'D18');
+        $sheet2->getStyle('A1:V1')->applyFromArray($header_style);
 
         $dataBSC = $this->getRawAnswer([5,6]);
         $row = 1;
@@ -454,6 +460,7 @@ class QuestionnaireController extends Controller
                 $sheet2->setCellValue($alphabet[$column++] . '' . $row, $data->nama);
                 $sheet2->setCellValue($alphabet[$column++] . '' . $row, $data->school_name);
                 $sheet2->setCellValue($alphabet[$column++] . '' . $row, $data->respondent);
+                $sheet2->setCellValue($alphabet[$column++] . '' . $row, $data->komentar);
                 $sheet2->setCellValue($alphabet[$column++] . '' . $row, $data->value);
             } else {
                 $sheet2->setCellValue($alphabet[$column++] . '' . $row, $data->value);
@@ -559,6 +566,7 @@ class QuestionnaireController extends Controller
             ->leftJoin('questionnairetypes as qt', 'ss.questionnaire_type_id', '=', 'qt.id')
             ->select('qt.name as perspective_name', 'ss.total as total_respondent', 'qt.weight_value', DB::raw('(ss.score / ss.total / 5 * 20) as score '), 'ss.total')
             ->whereIn('qt.id', [1, 2, 3, 4])
+            ->where('ss.school_id', '=', auth()->user()->school_id)
             ->orderBy('qt.id')
             ->get();
 

@@ -23,14 +23,20 @@ class FrontendController extends Controller
         // ORDER by score desc;
         // count school score
         $schoolScores = DB::table('schools as s')
-            ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
+            ->leftJoin('school_scores as ss', function($join){
+                $join->on('s.id', '=', 'ss.school_id')
+                ->whereIn('ss.questionnaire_type_id', [1, 2, 3, 4]);
+            })
             ->select('s.id', 's.name', DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'))
             ->groupBy(['s.id', 's.name'])
             ->orderBy('score', 'desc')
             ->get();
 
         $schoolAvg = DB::table('schools as s')
-            ->leftJoin('school_scores as ss', 's.id', '=', 'ss.school_id')
+            ->leftJoin('school_scores as ss', function($join){
+                $join->on('s.id', '=', 'ss.school_id')
+                ->whereIn('ss.questionnaire_type_id', [1, 2, 3, 4]);
+            })
             ->select(DB::raw('COALESCE(SUM(ss.score / ss.total / 5 * 20 * ss.multiple_by), 0) as score'))
             ->groupBy('s.id')
             ->get()
