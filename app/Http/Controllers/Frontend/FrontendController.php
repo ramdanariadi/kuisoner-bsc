@@ -45,7 +45,7 @@ class FrontendController extends Controller
                     return $item->id === $yourSchoolScores->id;
                 }) + 1; // +1 for 1-based index
                 $yourSchoolScores->score_gap_with_first_school = $schoolScores->first()->score - $yourSchoolScores->score;
-                $yourSchoolScores->score_gap_with_avg = $schoolAvg - $yourSchoolScores->score * ($yourSchoolScores->score > $schoolAvg ? -1 : 1);
+                $yourSchoolScores->score_gap_with_avg = ($yourSchoolScores->score - $schoolAvg);
             }
         }
 
