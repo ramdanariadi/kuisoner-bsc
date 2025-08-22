@@ -92,7 +92,7 @@
                         <img class="animation__wobble" src="{{asset('dist/img/Logo-Tut-Wuri-Handayani-PNG-Warna.png')}}" alt="AdminLTELogo" height="60" width="60">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Kuisoner</a>
+                        <a href="#" class="d-block">Evaluasi Kinerja BSC</a>
                     </div>
                 </div>
 
