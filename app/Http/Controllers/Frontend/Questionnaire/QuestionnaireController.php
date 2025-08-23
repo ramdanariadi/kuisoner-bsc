@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Frontend\Questionnaire;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -470,9 +469,9 @@ class QuestionnaireController extends Controller
             $sheet2->getStyle('A2:'.$alphabet[$column - 1].($row))->applyFromArray($body_style);
         }
 
-        $writer = new Xlsx($spreadsheet);
+        $writer = new Xls($spreadsheet);
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename=raw-data.xlsx');
+        header('Content-Disposition: attachment;filename=raw-data.xls');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
     }
