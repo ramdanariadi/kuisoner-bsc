@@ -301,6 +301,7 @@ class QuestionnaireController extends Controller
         }
         $data = DB::table('user_answers as ua')
             ->join('users as u', 'ua.user_id', '=', 'u.id')
+            ->join('schools as sc', 'sc.id', '=', 'u.school_id')
             ->leftJoin('statements as s', 'ua.statement_id', '=', 's.id')
             ->join('questionnairetypes as qt', 's.questionnaire_type_id', '=', 'qt.id')
             ->leftJoin('respondenttypes as rt', DB::raw('COALESCE(s.respondent_type_id, u.respondent_type_id)'), '=', 'rt.id')
@@ -310,7 +311,7 @@ class QuestionnaireController extends Controller
             ->select([
                 'u.id as user_id',
                 'u.name as nama',
-                'u.school_name',
+                'sc.name as school_name',
                 'rt.name as respondent',
                 'qt.name as perspective',
                 'q.id as questionnaire_id',
