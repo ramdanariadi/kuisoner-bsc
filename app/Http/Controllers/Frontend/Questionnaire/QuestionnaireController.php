@@ -392,6 +392,9 @@ class QuestionnaireController extends Controller
 
         $dataBSC = $this->getRawAnswer([1, 2, 3, 4]);
         $alphabet = range('A', 'Z');
+        foreach ($alphabet as $key => $value) {
+            $alphabet[] = $alphabet[0] . $value;
+        }
         $row = 1;
         $column = 0;
         $currentUser = null;
